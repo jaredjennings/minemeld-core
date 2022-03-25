@@ -67,7 +67,7 @@ GDNS = Extension(
 setup(
     name='minemeld-core',
     version=__version__,
-    url='https://github.com/PaloAltoNetworks-BD/minemeld-core',
+    url='https://github.com/jordanreedy16/minemeld-core',
     author='Palo Alto Networks',
     author_email='techbizdev@paloaltonetworks.com',
     description='An extensible indicator processing framework',
