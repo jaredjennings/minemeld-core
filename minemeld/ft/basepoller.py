@@ -343,7 +343,7 @@ class BasePollerFT(base.BaseFT):
                 default_base=self._DEFAULT_AGE_OUT_BASE
             )
         }
-        for k, v in _age_out.iteritems():
+        for k, v in _age_out.items():
             if k in self.age_out:
                 continue
             self.age_out[k] = parse_age_out(v)
@@ -520,7 +520,7 @@ class BasePollerFT(base.BaseFT):
         return True
 
     def _update_attributes(self, current, _new, current_run, new_run):
-        x = {k:v for k,v in current.iteritems() 
+        x = {k:v for k,v in current.items() 
              if k in _new or
                 k in self.attributes or
                 k in ['sources', 'last_seen', 'first_seen'] or

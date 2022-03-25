@@ -407,7 +407,7 @@ class DevicePusher(gevent.Greenlet):
             ctags.pop(a)
 
         # ips not in firewall
-        for a, atags in ctags.iteritems():
+        for a, atags in ctags.items():
             register[a] = atags
 
         LOG.debug('register %s', register)

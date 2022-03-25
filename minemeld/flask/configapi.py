@@ -209,7 +209,7 @@ def _load_config_from_file(rcpath):
         )
 
     nodes = rcconfig.get('nodes', {})
-    for idx, (nodename, nodevalue) in enumerate(nodes.iteritems()):
+    for idx, (nodename, nodevalue) in enumerate(nodes.items()):
         _set_stanza(
             'node%d' % idx,
             {'name': nodename, 'properties': nodevalue},

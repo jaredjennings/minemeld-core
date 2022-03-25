@@ -225,10 +225,10 @@ class MgmtbusMaster(object):
         LOG.info('state: {}'.format(result['answers']))
         LOG.info('changes: {!r}'.format(config.changes))
 
-        state_info = {k.split(':', 2)[-1]: v for k, v in result['answers'].iteritems()}
+        state_info = {k.split(':', 2)[-1]: v for k, v in result['answers'].items()}
 
         startup_plan = plan(config, state_info)
-        for node, command in startup_plan.iteritems():
+        for node, command in startup_plan.items():
             LOG.info('{} <= {}'.format(node, command))
             self._send_node_cmd(node, command)
 
@@ -322,7 +322,7 @@ class MgmtbusMaster(object):
 
         gstats = collections.defaultdict(lambda: 0)
 
-        for source, a in answers.iteritems():
+        for source, a in answers.items():
             ntype = 'processors'
             if len(a.get('inputs', [])) == 0:
                 ntype = 'miners'
@@ -335,7 +335,7 @@ class MgmtbusMaster(object):
             _, _, source = source.split(':', 2)
             source = hashlib.md5(source).hexdigest()[:10]
 
-            for m, v in stats.iteritems():
+            for m, v in stats.items():
                 gstats[ntype+'.'+m] += v
                 cc.putval(source+'.'+m, v,
                           interval=interval,
@@ -351,7 +351,7 @@ class MgmtbusMaster(object):
                     interval=interval
                 )
 
-        for gs, v in gstats.iteritems():
+        for gs, v in gstats.items():
             type_ = 'minemeld_delta'
             if gs.endswith('length'):
                 type_ = 'minemeld_counter'
@@ -405,7 +405,7 @@ class MgmtbusMaster(object):
                 result = revt.get(block=False)
 
                 with self._status_lock:
-                    for nodename, nodestatus in result['answers'].iteritems():
+                    for nodename, nodestatus in result['answers'].items():
                         self._merge_status(nodename, nodestatus)
 
                 try:

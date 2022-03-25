@@ -96,7 +96,7 @@ def traced_purge_all():
         return jsonify(error={'message': 'MINEMELD_TRACED_PURGE_PATH not set'}), 500
 
     jobs = JOBS_MANAGER.get_jobs(job_group='traced-purge')
-    for jobid, jobdata in jobs.iteritems():
+    for jobid, jobdata in jobs.items():
         if jobdata == 'RUNNING':
             return jsonify(error={'message': 'a trace purge job is already running'}), 400
 

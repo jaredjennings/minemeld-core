@@ -246,7 +246,7 @@ class Store(object):
 
         # garbage collect
         candidate = None
-        for _, table in self.current_tables.iteritems():
+        for _, table in self.current_tables.items():
             if table.ref_count() != 0:
                 continue
 

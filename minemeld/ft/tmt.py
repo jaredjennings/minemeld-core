@@ -96,7 +96,7 @@ class DTIAPI(basepoller.BasePollerFT):
         domain = row.pop('host_name', None)
 
         value = {}
-        for k, v in row.iteritems():
+        for k, v in row.items():
             if k == 'last_sample_timestamp':
                 value['tmt_last_sample_timestamp'] = int(v)*1000
                 continue
@@ -113,7 +113,7 @@ class DTIAPI(basepoller.BasePollerFT):
         type_, indicator = item[0].split(':', 1)
 
         value = {}
-        for k, v in item[1].iteritems():
+        for k, v in item[1].items():
             value[k] = v
         value['type'] = type_
 
@@ -126,7 +126,7 @@ class DTIAPI(basepoller.BasePollerFT):
             self.ttable.put(indicator, value)
             return
 
-        for k, v in value.iteritems():
+        for k, v in value.items():
             if k == 'tmt_last_sample_timestamp':
                 if v > ov[k]:  # confusing, this is just for PEP8 sake
                     ov[k] = v

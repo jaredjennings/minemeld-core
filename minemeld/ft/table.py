@@ -327,7 +327,7 @@ class Table(object):
                 struct.pack(">Q", self.num_indicators)
             )
 
-        for iattr, index in self.indexes.iteritems():
+        for iattr, index in self.indexes.items():
             v = value.get(iattr, None)
             if v is None:
                 continue
@@ -515,7 +515,7 @@ class Table(object):
 
         LOG.info('Scanning indexes...')
         last_global_id = 0
-        for i, idata in indexes.iteritems():
+        for i, idata in indexes.items():
             from_key = struct.pack("BBB", 2, idata['id'], 0xF0)
             include_start = False
             to_key = struct.pack("BBB", 2, idata['id'], 0xF1)

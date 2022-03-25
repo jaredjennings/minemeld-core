@@ -78,7 +78,7 @@ def main():
             if loaded_config is not None:
                 config.update(loaded_config)
 
-    config.update({k: v for k, v in vars(args).iteritems() if v is not None})
+    config.update({k: v for k, v in vars(args).items() if v is not None})
     LOG.info('config: {}'.format(config))
 
     if not config['no_merge_certifi'] and CERTIFI_WHERE:

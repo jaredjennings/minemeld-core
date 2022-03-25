@@ -51,7 +51,7 @@ def _prototype_paths():
     paths = paths.split(':')
 
     prototype_eps = minemeld.loader.map(minemeld.loader.MM_PROTOTYPES_ENTRYPOINT)
-    for pname, mmep in prototype_eps.iteritems():
+    for pname, mmep in prototype_eps.items():
         if not mmep.loadable:
             LOG.info('Prototype entry point {} not loadable, ignored'.format(pname))
             continue
@@ -294,14 +294,14 @@ def delete_local_prototype(prototypename):
 
     # check if the proto is in use in running or committed config
     rcconfig = running_config()
-    for nodename, nodevalue in rcconfig.get('nodes', {}).iteritems():
+    for nodename, nodevalue in rcconfig.get('nodes', {}).items():
         if 'prototype' not in nodevalue:
             continue
         if nodevalue['prototype'] == prototypename:
             return jsonify(error={'message': 'prototype in use in running config'}), 400
 
     ccconfig = committed_config()
-    for nodename, nodevalue in ccconfig.get('nodes', {}).iteritems():
+    for nodename, nodevalue in ccconfig.get('nodes', {}).items():
         if 'prototype' not in nodevalue:
             continue
         if nodevalue['prototype'] == prototypename:

@@ -74,7 +74,7 @@ def get_taxii_feeds():
         raise RuntimeError('Error retrieving engine status')
 
     result = []
-    for node, node_status in status.iteritems():
+    for node, node_status in status.items():
         class_ = node_status.get('class', None)
         if class_ != 'minemeld.ft.taxii.DataFeed':
             continue

@@ -209,7 +209,7 @@ class JobsManager(object):
 
         jobs_map = self.SR.hgetall(prefix)
 
-        for jobid, jobdata in jobs_map.iteritems():
+        for jobid, jobdata in jobs_map.items():
             try:
                 jobdata = json.loads(jobdata)
 

@@ -478,7 +478,7 @@ class TaxiiClient(basepoller.BasePollerFT):
                 }
 
         return [[iid, iv, params]
-                for iid, iv in stix_objects['indicators'].iteritems()]
+                for iid, iv in stix_objects['indicators'].items()]
 
     def _incremental_poll_collection(self, taxii_client, begin, end):
         cbegin = begin
@@ -719,7 +719,7 @@ class TaxiiClient(basepoller.BasePollerFT):
                 ov = indicator_hashes[indicator_type]
                 result['type'] = indicator_type
 
-            for h, v in indicator_hashes.iteritems():
+            for h, v in indicator_hashes.items():
                 if h == indicator_type:
                     continue
                 result['{}_{}'.format(self.prefix, h)] = v

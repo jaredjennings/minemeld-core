@@ -69,7 +69,7 @@ class Notifications(json.SimpleJSON):
         result = []
 
         for htype in ['md5', 'sha256', 'sha1']:
-            value = {self.prefix+'_'+k: v for k, v in item.iteritems()}
+            value = {self.prefix+'_'+k: v for k, v in item.items()}
             indicator = value.pop(self.prefix+'_'+htype, None)
             value['type'] = htype
 

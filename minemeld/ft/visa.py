@@ -181,7 +181,7 @@ class VTI(json.SimpleJSON):
         return None
 
     def _detect_sha_version(self, hash_value):
-        for hash_type, re_obj in self.hash_patterns.iteritems():
+        for hash_type, re_obj in self.hash_patterns.items():
             if re_obj.match(hash_value) is not None:
                 return hash_type
         return None

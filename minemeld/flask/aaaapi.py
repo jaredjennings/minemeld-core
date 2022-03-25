@@ -197,12 +197,12 @@ def delete_feed(feedname):
 def get_tags():
     tags = set()
 
-    for _, subsystem in _SUBSYSTEM_MAP.iteritems():
-        for _, attributes in subsystem.attrs.value().iteritems():
+    for _, subsystem in _SUBSYSTEM_MAP.items():
+        for _, attributes in subsystem.attrs.value().items():
             if 'tags' in attributes:
                 for t in attributes['tags']:
                     tags.add(t)
-    for _, attributes in _FEEDS_ATTRS.value().iteritems():
+    for _, attributes in _FEEDS_ATTRS.value().items():
         if 'tags' in attributes:
             for t in attributes['tags']:
                 tags.add(t)

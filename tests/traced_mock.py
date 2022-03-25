@@ -71,7 +71,7 @@ class MockTable(object):
 
     def backwards_iterator(self, timestamp, counter):
         starting_key = '%016x%016x' % (timestamp, counter)
-        items = [[k, v] for k, v in self.db.iteritems() if k <= starting_key]
+        items = [[k, v] for k, v in self.db.items() if k <= starting_key]
         items = sorted(items, cmp=lambda x, y: cmp(x[0], y[0]), reverse=True)
         return items
 
@@ -124,7 +124,7 @@ class MockStore(object):
 
     def iterate_backwards(self, ref, timestamp, counter):
         starting_key = '%016x%016x' % (timestamp, counter)
-        items = [[k, v] for k, v in self.db.iteritems() if k <= starting_key]
+        items = [[k, v] for k, v in self.db.items() if k <= starting_key]
         items = sorted(items, cmp=lambda x, y: cmp(x[0], y[0]), reverse=True)
 
         for c, i in enumerate(items):

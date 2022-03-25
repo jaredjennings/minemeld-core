@@ -182,7 +182,7 @@ class O365XML(basepoller.BasePollerFT):
                 i['sources'] = list(set(i['sources']) | set(cvalue['sources']))
             idict[indicator] = i
 
-        return itertools.imap(lambda i: i[1], idict.iteritems())
+        return itertools.imap(lambda i: i[1], idict.items())
 
     def _extract_products(self, rtree):
         products = rtree.xpath(XPATH_PRODUCTS)
@@ -361,7 +361,7 @@ class O365API(basepoller.BasePollerFT):
                         else:
                             oldv['{}_list'.format(label)].add(str(val))
 
-        for i, v in indicators.iteritems():
+        for i, v in indicators.items():
             for fn in O365_API_FIELDS:
                 label = 'o365_{}_list'.format(fn)
                 v[label] = list(v[label])

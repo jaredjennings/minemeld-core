@@ -94,7 +94,7 @@ def _build_deactivate_args(extension_name):
 
 
 def _find_running_job(extension, jobs):
-    for jobid, job in jobs.iteritems():
+    for jobid, job in jobs.items():
         if job['status'] != 'RUNNING':
             continue
 

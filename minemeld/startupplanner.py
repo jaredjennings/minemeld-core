@@ -20,11 +20,11 @@ def _build_graph(config):
     graph = nx.DiGraph()
 
     # nodes
-    for nodename, _ in config.nodes.iteritems():
+    for nodename, _ in config.nodes.items():
         graph.add_node(nodename)
 
     # edges
-    for nodename, nodevalue in config.nodes.iteritems():
+    for nodename, nodevalue in config.nodes.items():
         inputs = nodevalue.get('inputs', [])
         graph.add_edges_from([(i, nodename) for i in inputs])
 
@@ -65,7 +65,7 @@ def _plan_subgraph(sg, config, state_info):
 
     # pick the most common checkpoint among sources as reference point
     scheckpoints = sorted(
-        [(c, cn.num_sources) for c, cn in checkpoints.iteritems() if c is not None],
+        [(c, cn.num_sources) for c, cn in checkpoints.items() if c is not None],
         key=itemgetter(1),
         reverse=True
     )
@@ -120,7 +120,7 @@ def _plan_subgraph(sg, config, state_info):
     # we can just initialize
     init_flag = True
     added_nodes = []
-    for nodename, clist in changes.iteritems():
+    for nodename, clist in changes.items():
         added = next((c for c in clist if c.change == CHANGE_ADDED), None)
         if added is not None:
             if not state_info[nodename].get('is_source', False):
@@ -129,7 +129,7 @@ def _plan_subgraph(sg, config, state_info):
             added_nodes.append(nodename)
 
     added_input_nodes = set()
-    for nodename, clist in changes.iteritems():
+    for nodename, clist in changes.items():
         input_added = [c.detail for c in clist if c.change == CHANGE_INPUT_ADDED]
         for ainode in input_added:
             if not state_info[ainode].get('is_source', False):

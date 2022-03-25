@@ -260,6 +260,6 @@ class QueryProcessor(object):
 
         self._stop.set()
         self.queries_lock.acquire()
-        for _, gquery in self.queries.iteritems():
+        for _, gquery in self.queries.items():
             gquery.kill()
         self.queries_lock.release()

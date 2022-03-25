@@ -312,7 +312,7 @@ class Taxii2Client(basepoller.BasePollerFT):
             indicators = []
 
             # noinspection PyCompatibility
-            for i_type, i_patterns in comparisons.iteritems():
+            for i_type, i_patterns in comparisons.items():
                 # The Pattern Inspector buckets each comparison expression in the observable expression based on type
                 if i_type in _STIX2_TYPES_TO_MM_TYPES:
                     # The Pattern Inspector reduces the observable expression into a flat list of comparison expressions

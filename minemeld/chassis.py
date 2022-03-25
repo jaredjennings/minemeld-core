@@ -205,7 +205,7 @@ class Chassis(object):
         if self.fabric is None:
             return
 
-        for ftname, ft in self.fts.iteritems():
+        for ftname, ft in self.fts.items():
             try:
                 ft.stop()
             except:
@@ -226,7 +226,7 @@ class Chassis(object):
         self.log_glet = gevent.spawn(self._log_actor)
         self.status_glet = gevent.spawn(self._status_actor)
 
-        for ftname, ft in self.fts.iteritems():
+        for ftname, ft in self.fts.items():
             LOG.debug("starting %s", ftname)
             ft.start()
 

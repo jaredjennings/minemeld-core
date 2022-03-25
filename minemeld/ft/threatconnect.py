@@ -82,7 +82,7 @@ class ThreatConnect(object):
         return None
 
     def _detect_sha_version(self, hash):
-        for hash_type, re_obj in self.hash_patterns.iteritems():
+        for hash_type, re_obj in self.hash_patterns.items():
             if re_obj.match(hash) is not None:
                 return hash_type
         return None
@@ -110,7 +110,7 @@ class ThreatConnect(object):
 
     def general_processing(self, item, indicator_map, f_seen, l_seen):
         result = []
-        for tc_indicator, mm_indicator in indicator_map.iteritems():
+        for tc_indicator, mm_indicator in indicator_map.items():
             indicator = item.get(tc_indicator, None)
             if indicator is None:
                 continue
@@ -120,7 +120,7 @@ class ThreatConnect(object):
                 attributes['confidence'] = int(confidence)
             add_attributes = dict(indicator_map)
             add_attributes.pop(tc_indicator)
-            for tc_attribute, mm_attribute in add_attributes.iteritems():
+            for tc_attribute, mm_attribute in add_attributes.items():
                 value = item.get(tc_attribute, None)
                 if value is None:
                     continue
@@ -197,7 +197,7 @@ class ThreatConnect(object):
                 yield ("GENERAL", item, indicator_map)
 
     def groups_iterator(self, groups):
-        for group_type, group_ids in groups.iteritems():
+        for group_type, group_ids in groups.items():
             for group_id in group_ids:
                 for item in self._paginate_request(
                         self.api_base_uri + "/v2/groups/{}/{}/indicators".format(group_type, group_id), "indicator"):

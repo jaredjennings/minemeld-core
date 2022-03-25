@@ -279,7 +279,7 @@ class AzureJSON(basepoller.BasePollerFT):
             cv = aggregated_indicators[i['indicator']]
             cv.update(i)
 
-            for k, v in i.iteritems():
+            for k, v in i.items():
                 cv[k] = v
                 if k.startswith('azure_'):
                     cv['{}_list'.format(k)].add(str(v).lower())

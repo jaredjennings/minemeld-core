@@ -82,7 +82,7 @@ class MineMeldConfigChange(_ConfigChange):
 class MineMeldConfig(_Config):
     def as_nset(self):
         result = set()
-        for nname, nvalue in self.nodes.iteritems():
+        for nname, nvalue in self.nodes.items():
             result.add(
                 json.dumps(
                     [nname, nvalue.get('class', None)],
@@ -94,7 +94,7 @@ class MineMeldConfig(_Config):
     def compute_changes(self, oconfig):
         if oconfig is None:
             # oconfig is None, mark everything as added
-            for nodename, nodeattrs in self.nodes.iteritems():
+            for nodename, nodeattrs in self.nodes.items():
                 self.changes.append(
                     MineMeldConfigChange(nodename=nodename, nodeclass=nodeattrs['class'], change=CHANGE_ADDED)
                 )
@@ -435,13 +435,13 @@ def _detect_cycles(nodes):
             'outputs': []
         }
 
-    for n, v in nodes.iteritems():
+    for n, v in nodes.items():
         for i in v.get('inputs', []):
             if i in graph:
                 graph[i]['outputs'].append(n)
                 graph[n]['inputs'].append(i)
 
-    for n, v in graph.iteritems():
+    for n, v in graph.items():
         if len(v['inputs']) == 0:
             S.add(n)
 
@@ -456,7 +456,7 @@ def _detect_cycles(nodes):
         graph[n]['outputs'] = []
 
     nedges = 0
-    for n, v in graph.iteritems():
+    for n, v in graph.items():
         nedges += len(v['inputs'])
         nedges += len(v['outputs'])
 
@@ -475,7 +475,7 @@ def resolve_prototypes(config):
 
     # add prototype dirs from extension to paths
     prototypes_entrypoints = minemeld.loader.map(minemeld.loader.MM_PROTOTYPES_ENTRYPOINT)
-    for epname, mmep in prototypes_entrypoints.iteritems():
+    for epname, mmep in prototypes_entrypoints.items():
         if not mmep.loadable:
             LOG.info('Prototypes entrypoint {} not loadable'.format(epname))
             continue
@@ -494,7 +494,7 @@ def resolve_prototypes(config):
     valid = True
 
     nodes_config = config.nodes
-    for _, nconfig in nodes_config.iteritems():
+    for _, nconfig in nodes_config.items():
         if 'prototype' in nconfig:
             try:
                 nproto = _load_node_prototype(nconfig['prototype'], paths)
@@ -527,7 +527,7 @@ def validate_config(config):
         if re.match('^[a-zA-Z0-9_\-]+$', n) is None:  # pylint:disable=W1401
             result.append('%s node name is invalid' % n)
 
-    for n, v in nodes.iteritems():
+    for n, v in nodes.items():
         for i in v.get('inputs', []):
             if i not in nodes:
                 result.append('%s -> %s is unknown' % (n, i))
@@ -538,7 +538,7 @@ def validate_config(config):
                               (n, i))
 
     installed_nodes = minemeld.loader.map(minemeld.loader.MM_NODES_ENTRYPOINT)
-    for n, v in nodes.iteritems():
+    for n, v in nodes.items():
         nclass = v.get('class', None)
         if nclass is None:
             result.append('No class in {}'.format(n))

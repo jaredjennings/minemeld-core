@@ -441,7 +441,7 @@ def generate_bluecoat_feed(feed, start, num, desc, value, **kwargs):
         for bc_cat in bc_cat_list:
             bc_dict[bc_cat].append(i)
 
-    for key, value in bc_dict.iteritems():
+    for key, value in bc_dict.items():
         yield 'define category {}\n'.format(key)
         for ind in value:
             yield ind + '\n'

@@ -129,7 +129,7 @@ class HttpFT(basepoller.BasePollerFT):
                 self.indicator['transform'] = '\g<0>'
 
         self.fields = self.config.get('fields', {})
-        for f, fattrs in self.fields.iteritems():
+        for f, fattrs in self.fields.items():
             if 'regex' in fattrs:
                 fattrs['regex'] = re.compile(fattrs['regex'])
             else:
@@ -158,7 +158,7 @@ class HttpFT(basepoller.BasePollerFT):
             indicator = indicator.expand(self.indicator['transform'])
 
         attributes = {}
-        for f, fattrs in self.fields.iteritems():
+        for f, fattrs in self.fields.items():
             m = fattrs['regex'].search(line)
 
             if m is None:

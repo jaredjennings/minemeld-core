@@ -115,7 +115,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'ttps': stix_objects['ttps'],
                 'observables': stix_objects['observables']
             }
-            indicators = [[iid, iv, params] for iid, iv in stix_objects['indicators'].iteritems()]
+            indicators = [[iid, iv, params] for iid, iv in stix_objects['indicators'].items()]
 
             for i in indicators:
                 result = b._process_item(i)
