@@ -16,7 +16,6 @@
 
 Unit tests for minemeld.ft.st
 """
-from __future__ import print_function
 
 import unittest
 import tempfile
@@ -267,7 +266,7 @@ class MineMeldFTSTTests(unittest.TestCase):
             sid = uuid.uuid4().bytes
             st.put(sid, start, end)
         t2 = time.time()
-        print("TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt)))
+        print "TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt))
 
         self.assertEqual(st.num_segments, num_intervals)
         self.assertEqual(st.num_endpoints, num_intervals*2)
@@ -294,7 +293,7 @@ class MineMeldFTSTTests(unittest.TestCase):
             sid = uuid.uuid4().bytes
             st.put(sid, start, end)
         t2 = time.time()
-        print("TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt)))
+        print "TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt))
 
         num_queries = 100000
 
@@ -304,6 +303,6 @@ class MineMeldFTSTTests(unittest.TestCase):
             q = random.randint(0, 0xFFFFFFFF)
             next(st.cover(q), None)
         t2 = time.time()
-        print("TIME: Queried %d times in %d" % (num_queries, (t2-t1)))
+        print "TIME: Queried %d times in %d" % (num_queries, (t2-t1))
 
         st.close()

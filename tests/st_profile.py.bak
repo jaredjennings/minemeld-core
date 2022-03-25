@@ -14,7 +14,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from __future__ import print_function
 import uuid
 import random
 import tempfile
@@ -72,6 +71,6 @@ if __name__ == '__main__':
         sid = uuid.uuid4().bytes
         st.put(sid, start, end)
     t2 = time.time()
-    print("TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt)))
+    print "TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt))
 
     queries(st)

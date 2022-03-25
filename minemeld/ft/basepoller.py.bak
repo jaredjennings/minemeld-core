@@ -17,7 +17,6 @@ This module implements minemeld.ft.basepoller.BasePollerFT, a base class for
 miners retrieving indicators by periodically polling an external source.
 """
 
-from future.utils import raise_
 import logging
 import copy
 import random
@@ -712,7 +711,7 @@ class BasePollerFT(base.BaseFT):
 
         if aggregation_exc is not None:
             LOG.info('{} - Reraising exception happened during aggregation'.format(self.name))
-raise_(aggregation_exc[0], aggregation_exc[1], aggregation_exc[2])
+            raise aggregation_exc[0], aggregation_exc[1], aggregation_exc[2]
 
         return True
 

@@ -16,7 +16,6 @@
 
 Unit tests for minemeld.ft.ipop
 """
-from __future__ import print_function
 
 import gevent.monkey
 gevent.monkey.patch_all(thread=False, select=False)
@@ -1273,7 +1272,7 @@ class MineMeldFTIPOpTests(unittest.TestCase):
                 'sources': ['s1s']
             })
         t2 = time.time()
-        print("TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt)))
+        print "TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt))
 
         t1 = time.time()
         for j in xrange(num_intervals):
@@ -1284,7 +1283,7 @@ class MineMeldFTIPOpTests(unittest.TestCase):
                 'count': j
             })
         t2 = time.time()
-        print("TIME: Updated %d intervals in %d" % (num_intervals, (t2-t1-dt)))
+        print "TIME: Updated %d intervals in %d" % (num_intervals, (t2-t1-dt))
 
         a.stop()
 
@@ -1336,7 +1335,7 @@ class MineMeldFTIPOpTests(unittest.TestCase):
                 'sources': ['s1s']
             })
         t2 = time.time()
-        print("TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt)))
+        print "TIME: Inserted %d intervals in %d" % (num_intervals, (t2-t1-dt))
 
         a.stop()
 

@@ -16,7 +16,6 @@
 
 Unit tests for minemeld.ft.table
 """
-from __future__ import print_function
 
 import unittest
 import tempfile
@@ -304,7 +303,7 @@ class MineMeldFTTableTests(unittest.TestCase):
             d[key] = value
             table.put(key, value)
         t2 = time.time()
-        print('TIME: Written %d elements in %s secs' % (100000, t2-t1))
+        print 'TIME: Written %d elements in %s secs' % (100000, t2-t1)
 
         # check number of indicators added
         self.assertEqual(table.num_indicators, len(d.keys()))
