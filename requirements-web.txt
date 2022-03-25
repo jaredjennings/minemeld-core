@@ -1,8 +1,8 @@
-Flask==0.12.4
-gunicorn==19.5.0
-psutil==5.6.6
-Flask-Login==0.2.11
-passlib==1.7.4
-rrdtool==0.1.2
-supervisor==3.1.3
-blinker==1.4
+Flask>=0.12.4
+gunicorn>=19.5.0
+psutil>=5.6.6
+Flask-Login>=0.2.11
+passlib>=1.7.4
+rrdtool>=0.1.2
+supervisor>=3.1.3
+blinker>=1.4
