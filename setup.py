@@ -33,7 +33,7 @@ with open('nodes.json') as f:
         'minemeld_nodes_validators': []
     }
     _nodes = json.load(f)
-    for node, v in _nodes.iteritems():
+    for node, v in _nodes.items():
         _entry_points['minemeld_nodes'].append(
             '{} = {}'.format(node, v['class'])
         )
