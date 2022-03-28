@@ -31,3 +31,5 @@ unicodecsv>=0.14.1
 Werkzeug>=2.0.3
 pyzmq>=22.3.0
 stix2-patterns>=1.1.0
+xmltodict>=0.12.0
+future>=0.18.2
