@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 import os
 import signal
 import time
 import logging
 import argparse
-import xmlrpclib
+import xmlrpc.client
 from zipfile import ZipFile
 from collections import deque
 from contextlib import contextmanager
@@ -105,7 +108,7 @@ class ContextManagerStack(object):
 
 @contextmanager
 def handle_minemeld_engine(supervisor_url):
-    sserver = xmlrpclib.ServerProxy(
+    sserver = xmlrpc.client.ServerProxy(
         'http://127.0.0.1',
         transport=supervisor.xmlrpc.SupervisorTransport(
             None,
@@ -326,7 +329,7 @@ def _reload_candidate_config(supervisor_url):
 
     LOG.info('Candidate config keys deleted')
 
-    sserver = xmlrpclib.ServerProxy(
+    sserver = xmlrpc.client.ServerProxy(
         'http://127.0.0.1',
         transport=supervisor.xmlrpc.SupervisorTransport(
             None,

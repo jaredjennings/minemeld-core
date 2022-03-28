@@ -14,6 +14,9 @@
 
 from __future__ import absolute_import
 
+from builtins import next
+from builtins import str
+from builtins import map
 import logging
 import shutil
 
@@ -108,7 +111,7 @@ class SyslogMatcher(actorbase.ActorBaseFT):
             return
 
         if type_ == 'IPv4':
-            start, end = map(netaddr.IPAddress, indicator.split('-', 1))
+            start, end = list(map(netaddr.IPAddress, indicator.split('-', 1)))
 
             LOG.debug('start: %d', start.value)
 
@@ -401,7 +404,7 @@ class SyslogMiner(base.BaseFT):
             'interval': _age_out.get('interval', 3600),
             'default': parse_age_out(_age_out.get('default', 'last_seen+1h'))
         }
-        for k, v in _age_out.items():
+        for k, v in list(_age_out.items()):
             if k in self.age_out:
                 continue
             self.age_out[k] = parse_age_out(v)

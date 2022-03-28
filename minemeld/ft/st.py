@@ -26,7 +26,10 @@ Numbers are 8-bit unsigned.
 
 - Type: 0: START, 1: END
 """
+from __future__ import division
 
+from builtins import object
+from past.utils import old_div
 import plyvel
 import struct
 import logging
@@ -65,7 +68,7 @@ class ST(object):
         if start <= lower and upper <= end:
             return [(lower, upper)]
 
-        mid = (lower+upper)/2
+        mid = old_div((lower+upper),2)
 
         result = []
         if start <= mid:
@@ -198,7 +201,7 @@ class ST(object):
         upper = self.max_endpoint*2
 
         while True:
-            mid = (lower+upper)/2
+            mid = old_div((lower+upper),2)
             if value <= mid:
                 upper = mid
             else:

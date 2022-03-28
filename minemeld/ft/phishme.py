@@ -17,6 +17,8 @@ This module implements minemeld.ft.phishme.Intelligence, the Miner node for
 PhishMe Intelligence API.
 """
 
+from builtins import filter
+from builtins import str
 import os
 import yaml
 import requests
@@ -347,7 +349,7 @@ class Intelligence(basepoller.BasePollerFT):
 
             thgen = self._retrieve_threats(
                 self._group_changes_in_pages(
-                    itertools.ifilter(self._filter_changes, changelog)
+                    list(filter(self._filter_changes, changelog))
                 )
             )
             for t in thgen:

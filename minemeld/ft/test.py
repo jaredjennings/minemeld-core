@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+from builtins import str
+from builtins import range
 import logging
 import gevent
 
@@ -45,7 +47,7 @@ class TestMiner(base.BaseFT):
         LOG.info('%s - start sending messages: %d', self.name, utc_millisec())
 
         t1 = utc_millisec()
-        for i in xrange(self.num_messages):
+        for i in range(self.num_messages):
             ip = str(netaddr.IPAddress(i+cip))
             self.emit_update(ip, v)
 

@@ -311,7 +311,7 @@ def import_local_backup():
         with ZipFile(tf.name, 'r') as zf:
             contents = zf.namelist()
 
-    except Exception, e:
+    except Exception as e:
         safe_remove(tf.name)
         raise e
 

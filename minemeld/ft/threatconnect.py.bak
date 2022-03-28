@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import logging
 import hmac
 import hashlib
@@ -11,8 +12,8 @@ import re
 
 from netaddr import IPNetwork, AddrFormatError
 from urllib import quote
-from basepoller import BasePollerFT
-from utils import utc_millisec, dt_to_millisec
+from .basepoller import BasePollerFT
+from .utils import utc_millisec, dt_to_millisec
 from datetime import datetime
 
 LOG = logging.getLogger(__name__)

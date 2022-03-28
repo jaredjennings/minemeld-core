@@ -1,3 +1,5 @@
+from builtins import next
+from builtins import object
 import gevent
 import gevent.queue
 import redis
@@ -88,7 +90,7 @@ class EventsReceiver(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         result = next(self._iterator)
 
         return result

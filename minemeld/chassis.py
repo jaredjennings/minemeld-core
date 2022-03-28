@@ -19,6 +19,7 @@ A chassis instance contains a list of nodes and a fabric.
 Nodes communicate using the fabric.
 """
 
+from builtins import object
 import os
 import logging
 
@@ -188,7 +189,7 @@ class Chassis(object):
         return 'ok'
 
     def fts_init(self):
-        for ft in self.fts.values():
+        for ft in list(self.fts.values()):
             if ft.get_state() < minemeld.ft.ft_states.INIT:
                 return False
         return True
@@ -205,7 +206,7 @@ class Chassis(object):
         if self.fabric is None:
             return
 
-        for ftname, ft in self.fts.items():
+        for ftname, ft in list(self.fts.items()):
             try:
                 ft.stop()
             except:
@@ -226,7 +227,7 @@ class Chassis(object):
         self.log_glet = gevent.spawn(self._log_actor)
         self.status_glet = gevent.spawn(self._status_actor)
 
-        for ftname, ft in self.fts.items():
+        for ftname, ft in list(self.fts.items()):
             LOG.debug("starting %s", ftname)
             ft.start()
 

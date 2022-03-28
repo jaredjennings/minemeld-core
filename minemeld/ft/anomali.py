@@ -17,6 +17,7 @@ This module implements minemeld.ft.anomali.Intelligence, the Miner node for
 Anomali Intelligence API.
 """
 
+from builtins import str
 import os
 import yaml
 import netaddr
@@ -111,7 +112,7 @@ class Intelligence(basepoller.BasePollerFT):
 
         indicator = item['value']
         if not (isinstance(indicator, str) or
-                isinstance(indicator, unicode)):
+                isinstance(indicator, str)):
             LOG.error(
                 '%s - Wrong indicator type: %s - %s',
                 self.name, indicator, type(indicator)
@@ -120,7 +121,7 @@ class Intelligence(basepoller.BasePollerFT):
 
         fields = self.fields
         if fields is None:
-            fields = item.keys()
+            fields = list(item.keys())
             fields.remove('value')
 
         attributes = {}

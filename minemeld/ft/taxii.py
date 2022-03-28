@@ -13,10 +13,16 @@
 #  limitations under the License.
 
 from __future__ import absolute_import
+from __future__ import division
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import map
+from builtins import str
+from past.utils import old_div
 import logging
 import copy
-import urlparse
+import urllib.parse
 import uuid
 import os.path
 from datetime import datetime, timedelta
@@ -219,7 +225,7 @@ class TaxiiClient(basepoller.BasePollerFT):
     def _build_taxii_client(self):
         result = libtaxii.clients.HttpClient()
 
-        up = urlparse.urlparse(self.discovery_service)
+        up = urllib.parse.urlparse(self.discovery_service)
 
         if up.scheme == 'https':
             result.set_use_https(True)
@@ -269,7 +275,7 @@ class TaxiiClient(basepoller.BasePollerFT):
         return result
 
     def _call_taxii_service(self, service_url, tc, request):
-        up = urlparse.urlparse(service_url)
+        up = urllib.parse.urlparse(service_url)
         hostname = up.hostname
         path = up.path
         port = up.port
@@ -473,12 +479,12 @@ class TaxiiClient(basepoller.BasePollerFT):
             LOG.info('{} - TAXII Content contains observables but no indicators'.format(self.name))
             if self.create_fake_indicator:
                 stix_objects['indicators']['minemeld:00000000-0000-0000-0000-000000000000'] = {
-                    'observables': stix_objects['observables'].values(),
+                    'observables': list(stix_objects['observables'].values()),
                     'ttps': []
                 }
 
         return [[iid, iv, params]
-                for iid, iv in stix_objects['indicators'].items()]
+                for iid, iv in list(stix_objects['indicators'].items())]
 
     def _incremental_poll_collection(self, taxii_client, begin, end):
         cbegin = begin
@@ -652,7 +658,7 @@ class TaxiiClient(basepoller.BasePollerFT):
         elif ot == 'FileObjectType':
             ov = ''
 
-            if 'file_name' in op.keys():
+            if 'file_name' in list(op.keys()):
                 file_name = op.get('file_name')
                 if isinstance(file_name, dict):
                     ov = op['file_name'].get('value', None)
@@ -719,7 +725,7 @@ class TaxiiClient(basepoller.BasePollerFT):
                 ov = indicator_hashes[indicator_type]
                 result['type'] = indicator_type
 
-            for h, v in indicator_hashes.items():
+            for h, v in list(indicator_hashes.items()):
                 if h == indicator_type:
                     continue
                 result['{}_{}'.format(self.prefix, h)] = v
@@ -866,7 +872,7 @@ class TaxiiClient(basepoller.BasePollerFT):
             ov = ''
             result['type'] = 'pdf-file'
 
-            if 'file_name' in op.keys():
+            if 'file_name' in list(op.keys()):
                 file_name = op.get('file_name')
                 if type(file_name) == dict:
                     if file_name.get('value', None) is not None:
@@ -878,27 +884,27 @@ class TaxiiClient(basepoller.BasePollerFT):
 
             LOG.debug('PDFObjectType OV: {!r}'.format(ov))
 
-            if 'file_path' in op.keys():
+            if 'file_path' in list(op.keys()):
                 result['file_path'] = op['file_path'].get('value', None)
 
-            if 'file_size' in op.keys():
+            if 'file_size' in list(op.keys()):
                 result['file_size'] = op['file_size'].get('value', None)
 
-            if 'metadata' in op.keys():
+            if 'metadata' in list(op.keys()):
                 result['metadata'] = op['metadata']
 
-            if 'file_format' in op.keys():
+            if 'file_format' in list(op.keys()):
                 result['file_format'] = op['file_format']
 
             hashes = op.get('hashes', None)
             if hashes is not None:
                 for i in hashes:
-                    if 'type' in i.keys():
+                    if 'type' in list(i.keys()):
                         if isinstance(i['type'], string_types):
                             hash_type = i['type']
                         else:
                             hash_type = i['type'].get('value', None)
-                    if 'simple_hash_value' in i.keys():
+                    if 'simple_hash_value' in list(i.keys()):
                         if isinstance(i['simple_hash_value'], string_types):
                             result[hash_type] = i['simple_hash_value']
                         else:
@@ -918,7 +924,7 @@ class TaxiiClient(basepoller.BasePollerFT):
             ov = ''
             result['type'] = 'http-session'
 
-            if 'http_request_response' in op.keys():
+            if 'http_request_response' in list(op.keys()):
                 tmp = op['http_request_response']
 
                 if len(tmp) == 1:
@@ -947,27 +953,27 @@ class TaxiiClient(basepoller.BasePollerFT):
             result['type'] = 'windows-executable'
             LOG.debug('WindowsExecutableFileObjectType OP: {!r}'.format(op))
 
-            if 'file_name' in op.keys():
+            if 'file_name' in list(op.keys()):
                 if isinstance(op['file_name'], string_types):
                     ov = op['file_name']
                 else:
                     ov = op['file_name'].get('value', None)
 
-            if 'size_in_bytes' in op.keys():
+            if 'size_in_bytes' in list(op.keys()):
                 result['file_size'] = op['size_in_bytes']
 
-            if 'file_format' in op.keys():
+            if 'file_format' in list(op.keys()):
                 result['file_format'] = op['file_format']
 
             hashes = op.get('hashes', None)
             if hashes is not None:
                 for i in hashes:
-                    if 'type' in i.keys():
+                    if 'type' in list(i.keys()):
                         if isinstance(i['type'], string_types):
                             hash_type = i['type']
                         else:
                             hash_type = i['type'].get('value', None)
-                    if 'simple_hash_value' in i.keys():
+                    if 'simple_hash_value' in list(i.keys()):
                         if isinstance(i['simple_hash_value'], string_types):
                             result[hash_type] = i['simple_hash_value']
                         else:
@@ -1136,10 +1142,10 @@ class TaxiiClient(basepoller.BasePollerFT):
         if last_run is None or last_run < max_back:
             last_run = max_back
 
-        begin = datetime.utcfromtimestamp(last_run/1000)
+        begin = datetime.utcfromtimestamp(old_div(last_run,1000))
         begin = begin.replace(tzinfo=pytz.UTC)
 
-        end = datetime.utcfromtimestamp(now/1000)
+        end = datetime.utcfromtimestamp(old_div(now,1000))
         end = end.replace(tzinfo=pytz.UTC)
 
         if self.lower_timestamp_precision:
@@ -1230,7 +1236,7 @@ def _stix_ip_observable(namespace, indicator, value):
             # use netaddr builtin algo to summarize range into CIDR
             iprange = netaddr.IPRange(a1, a2)
             cidrs = iprange.cidrs()
-            indicators = map(str, cidrs)
+            indicators = list(map(str, cidrs))
 
     observables = []
     for i in indicators:
@@ -1648,7 +1654,7 @@ class DataFeed(actorbase.ActorBaseFT):
                 next_expiration = (
                     (otimestamp + self.age_out_interval*1000) - now
                 )
-                wait_time = max(wait_time, next_expiration/1000 + 1)
+                wait_time = max(wait_time, old_div(next_expiration,1000) + 1)
             LOG.debug('%s - sleeping for %d secs', self.name, wait_time)
 
             gevent.sleep(wait_time)

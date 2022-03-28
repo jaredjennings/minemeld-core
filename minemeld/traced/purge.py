@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 import logging
 import os
 import time
@@ -7,7 +10,7 @@ import sys
 import argparse
 import shutil
 import json
-import xmlrpclib
+import xmlrpc.client
 import supervisor.xmlrpc
 
 LOG = logging.getLogger(__name__)
@@ -38,7 +41,7 @@ def _parse_args():
 
 
 def stop_minemeld_traced(supervisor_url):
-    sserver = xmlrpclib.ServerProxy(
+    sserver = xmlrpc.client.ServerProxy(
         'http://127.0.0.1',
         transport=supervisor.xmlrpc.SupervisorTransport(
             None,
@@ -89,7 +92,7 @@ def stop_minemeld_traced(supervisor_url):
 
 
 def start_minemeld_traced(supervisor_url):
-    sserver = xmlrpclib.ServerProxy(
+    sserver = xmlrpc.client.ServerProxy(
         'http://127.0.0.1',
         transport=supervisor.xmlrpc.SupervisorTransport(
             None,

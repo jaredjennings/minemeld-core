@@ -17,6 +17,7 @@ This module implements minemeld.ft.mm.JSONSEQMiner, the Miner node for
 MineMeld JSON-SEQ feeds over HTTP/HTTPS.
 """
 
+from builtins import str
 import os.path
 import logging
 

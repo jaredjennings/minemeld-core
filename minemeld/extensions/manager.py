@@ -1,3 +1,4 @@
+from builtins import str
 import sys
 import os
 import os.path
@@ -77,8 +78,8 @@ def _read_metadata(metadata_str):
 def _read_entry_points(ep_contents):
     ep_map = EntryPoint.parse_map(ep_contents)
 
-    for _, epgroup in ep_map.items():
-        for epname, ep in epgroup.items():
+    for _, epgroup in list(ep_map.items()):
+        for epname, ep in list(epgroup.items()):
             epgroup[epname] = str(ep)
 
     return ep_map
@@ -97,7 +98,7 @@ def _activated_extensions():
     activated_extensions = {}
 
     for epgroup in epgroups:
-        for _, epvalue in minemeld.loader.map(epgroup).items():
+        for _, epvalue in list(minemeld.loader.map(epgroup).items()):
             if epvalue.ep.dist.project_name == 'minemeld-core':
                 continue
 
@@ -120,7 +121,7 @@ def _activated_extensions():
                 try:
                     with open(os.path.join(location, 'minemeld.json'), 'r') as f:
                         dist_metadata = json.load(f)
-                    for k in metadata.keys():
+                    for k in list(metadata.keys()):
                         metadata[k] = dist_metadata.get(k, None)
 
                 except (IOError, OSError) as excpt:
@@ -130,7 +131,7 @@ def _activated_extensions():
                 dist_metadata = _read_metadata(
                     epvalue.ep.dist.get_metadata('METADATA')
                 )
-                for k in metadata.keys():
+                for k in list(metadata.keys()):
                     if k in METADATA_MAP and METADATA_MAP[k] in dist_metadata:
                         metadata[k] = dist_metadata[METADATA_MAP[k]]
 
@@ -293,7 +294,7 @@ def extensions(installation_dir):
         if _extension_activated:
             _activated.pop(installed_extension.name)
 
-    for _activated_extension in _activated.values():
+    for _activated_extension in list(_activated.values()):
         _adict = _activated_extension._asdict()
         _adict.pop('location')
         _extensions.append(ExternalExtension(

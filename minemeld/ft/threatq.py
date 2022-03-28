@@ -17,6 +17,7 @@ This module implements minemeld.ft.threatq.Export, the Miner node for ThreatQ
 export API.
 """
 
+from builtins import str
 import requests
 import logging
 import os

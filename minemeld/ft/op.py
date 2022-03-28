@@ -72,7 +72,7 @@ class AggregateFT(actorbase.ActorBaseFT):
             if v is None:
                 continue
 
-            for k in v.keys():
+            for k in list(v.keys()):
                 if k in mv and k in RESERVED_ATTRIBUTES:
                     mv[k] = RESERVED_ATTRIBUTES[k](mv[k], v[k])
                 else:
@@ -86,7 +86,7 @@ class AggregateFT(actorbase.ActorBaseFT):
 
         result['_added'] = ov['_added']
 
-        for k in nv.keys():
+        for k in list(nv.keys()):
             result[k] = nv[k]
 
         return result
@@ -187,7 +187,7 @@ class AggregateFT(actorbase.ActorBaseFT):
             if v is None:
                 continue
 
-            for k in v.keys():
+            for k in list(v.keys()):
                 if k in mv and k in RESERVED_ATTRIBUTES:
                     mv[k] = RESERVED_ATTRIBUTES[k](mv[k], v[k])
                 else:
@@ -211,7 +211,7 @@ class AggregateFT(actorbase.ActorBaseFT):
                                      to_key=to_key, include_value=True):
             indicator, _ = k.split('\x00')
             if indicator == cindicator:
-                for vk in v.keys():
+                for vk in list(v.keys()):
                     if vk in cvalue and vk in RESERVED_ATTRIBUTES:
                         cvalue[vk] = RESERVED_ATTRIBUTES[vk](cvalue[vk], v[vk])
                     else:

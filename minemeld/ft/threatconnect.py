@@ -1,4 +1,10 @@
 from __future__ import absolute_import
+from __future__ import division
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import object
+from past.utils import old_div
 import logging
 import hmac
 import hashlib
@@ -11,7 +17,7 @@ import yaml
 import re
 
 from netaddr import IPNetwork, AddrFormatError
-from urllib import quote
+from urllib.parse import quote
 from .basepoller import BasePollerFT
 from .utils import utc_millisec, dt_to_millisec
 from datetime import datetime
@@ -83,7 +89,7 @@ class ThreatConnect(object):
         return None
 
     def _detect_sha_version(self, hash):
-        for hash_type, re_obj in self.hash_patterns.items():
+        for hash_type, re_obj in list(self.hash_patterns.items()):
             if re_obj.match(hash) is not None:
                 return hash_type
         return None
@@ -111,7 +117,7 @@ class ThreatConnect(object):
 
     def general_processing(self, item, indicator_map, f_seen, l_seen):
         result = []
-        for tc_indicator, mm_indicator in indicator_map.items():
+        for tc_indicator, mm_indicator in list(indicator_map.items()):
             indicator = item.get(tc_indicator, None)
             if indicator is None:
                 continue
@@ -121,7 +127,7 @@ class ThreatConnect(object):
                 attributes['confidence'] = int(confidence)
             add_attributes = dict(indicator_map)
             add_attributes.pop(tc_indicator)
-            for tc_attribute, mm_attribute in add_attributes.items():
+            for tc_attribute, mm_attribute in list(add_attributes.items()):
                 value = item.get(tc_attribute, None)
                 if value is None:
                     continue
@@ -147,7 +153,7 @@ class ThreatConnect(object):
 
     def _paginate_request(self, entry_point, entity, from_timestamp=None):
         if from_timestamp is not None:
-            isotime = datetime.fromtimestamp(from_timestamp / 1000).replace(tzinfo=pytz.utc).isoformat()
+            isotime = datetime.fromtimestamp(old_div(from_timestamp, 1000)).replace(tzinfo=pytz.utc).isoformat()
 
         def do_call(start):
             api_request = entry_point + '?resultStart={}&resultLimit=100'.format(start)
@@ -198,7 +204,7 @@ class ThreatConnect(object):
                 yield ("GENERAL", item, indicator_map)
 
     def groups_iterator(self, groups):
-        for group_type, group_ids in groups.items():
+        for group_type, group_ids in list(groups.items()):
             for group_id in group_ids:
                 for item in self._paginate_request(
                         self.api_base_uri + "/v2/groups/{}/{}/indicators".format(group_type, group_id), "indicator"):

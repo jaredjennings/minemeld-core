@@ -13,7 +13,10 @@
 #  limitations under the License.
 
 from __future__ import absolute_import
+from __future__ import division
 
+from builtins import str
+from past.utils import old_div
 import logging
 import requests
 import os
@@ -86,7 +89,7 @@ class IPRiskList(csv.CSVFT):
         if risk != '':
             try:
                 result['recordedfuture_risk'] = int(risk)
-                result['confidence'] = (int(risk) * self.confidence) / 100
+                result['confidence'] = old_div((int(risk) * self.confidence), 100)
             except:
                 LOG.debug("%s - invalid risk string: %s",
                           self.name, risk)
@@ -200,7 +203,7 @@ class DomainRiskList(csv.CSVFT):
         if risk != '':
             try:
                 result['recordedfuture_risk'] = int(risk)
-                result['confidence'] = (int(risk) * self.confidence) / 100
+                result['confidence'] = old_div((int(risk) * self.confidence), 100)
             except:
                 LOG.debug("%s - invalid risk string: %s",
                           self.name, risk)
@@ -359,7 +362,7 @@ class MasterRiskList(csv.CSVFT):
         if risk != '':
             try:
                 result['recordedfuture_risk'] = int(risk)
-                result['confidence'] = (int(risk) * self.confidence) / 100
+                result['confidence'] = old_div((int(risk) * self.confidence), 100)
             except:
                 LOG.debug("%s - invalid risk string: %s",
                           self.name, risk)

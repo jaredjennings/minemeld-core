@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import object
 import os
 
 import gevent
@@ -133,7 +134,7 @@ def _load_config(config_path):
 def _load_auth_dbs(config_path):
     with API_CONFIG_LOCK.acquire():
         api_config_path = os.path.join(config_path, 'api')
-        for env, default in _AUTH_DBS.items():
+        for env, default in list(_AUTH_DBS.items()):
             dbname = get(env, default)
             new_db = False
 

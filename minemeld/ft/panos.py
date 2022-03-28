@@ -12,6 +12,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import next
+from builtins import range
 import logging
 import gevent
 import gevent.event

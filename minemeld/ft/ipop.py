@@ -12,6 +12,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
+from builtins import next
+from builtins import object
 import logging
 import netaddr
 import uuid
@@ -121,7 +124,7 @@ class AggregateIPv4FT(actorbase.ActorBaseFT):
         result['_added'] = ov['_added']
         result['_id'] = ov['_id']
 
-        for k in nv.keys():
+        for k in list(nv.keys()):
             result[k] = nv[k]
 
         return result
@@ -226,10 +229,7 @@ class AggregateIPv4FT(actorbase.ActorBaseFT):
 
     def _range_from_indicator(self, indicator):
         if '-' in indicator:
-            start, end = map(
-                lambda x: int(netaddr.IPAddress(x)),
-                indicator.split('-', 1)
-            )
+            start, end = [int(netaddr.IPAddress(x)) for x in indicator.split('-', 1)]
         elif '/' in indicator:
             ipnet = netaddr.IPNetwork(indicator)
             start = int(ipnet.ip)
@@ -433,7 +433,7 @@ class AggregateIPv4FT(actorbase.ActorBaseFT):
             )
 
     def get(self, source=None, indicator=None):
-        if not type(indicator) in [str, unicode]:
+        if not type(indicator) in [str, str]:
             raise ValueError("Invalid indicator type")
 
         indicator = int(netaddr.IPAddress(indicator))

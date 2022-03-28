@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
 import sys
 import os
 import os.path
@@ -94,7 +95,7 @@ def _build_deactivate_args(extension_name):
 
 
 def _find_running_job(extension, jobs):
-    for jobid, job in jobs.items():
+    for jobid, job in list(jobs.items()):
         if job['status'] != 'RUNNING':
             continue
 

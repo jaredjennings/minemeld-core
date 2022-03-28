@@ -29,6 +29,8 @@ periodically retrieve metrics from all the nodes.
 
 from __future__ import absolute_import
 
+from builtins import str
+from builtins import object
 import logging
 import uuid
 import collections
@@ -225,10 +227,10 @@ class MgmtbusMaster(object):
         LOG.info('state: {}'.format(result['answers']))
         LOG.info('changes: {!r}'.format(config.changes))
 
-        state_info = {k.split(':', 2)[-1]: v for k, v in result['answers'].items()}
+        state_info = {k.split(':', 2)[-1]: v for k, v in list(result['answers'].items())}
 
         startup_plan = plan(config, state_info)
-        for node, command in startup_plan.items():
+        for node, command in list(startup_plan.items()):
             LOG.info('{} <= {}'.format(node, command))
             self._send_node_cmd(node, command)
 
@@ -263,7 +265,7 @@ class MgmtbusMaster(object):
                 continue
 
             all_started = True
-            for answer in result['answers'].values():
+            for answer in list(result['answers'].values()):
                 if answer.get('state', None) != minemeld.ft.ft_states.STARTED:
                     all_started = False
                     break
@@ -291,7 +293,7 @@ class MgmtbusMaster(object):
             result = revt.get(block=False)
 
             cgraphok = True
-            for answer in result['answers'].values():
+            for answer in list(result['answers'].values()):
                 cgraphok &= (answer['checkpoint'] == chkp)
             if cgraphok:
                 LOG.info('checkpoint graph - all good')
@@ -322,7 +324,7 @@ class MgmtbusMaster(object):
 
         gstats = collections.defaultdict(lambda: 0)
 
-        for source, a in answers.items():
+        for source, a in list(answers.items()):
             ntype = 'processors'
             if len(a.get('inputs', [])) == 0:
                 ntype = 'miners'
@@ -335,7 +337,7 @@ class MgmtbusMaster(object):
             _, _, source = source.split(':', 2)
             source = hashlib.md5(source).hexdigest()[:10]
 
-            for m, v in stats.items():
+            for m, v in list(stats.items()):
                 gstats[ntype+'.'+m] += v
                 cc.putval(source+'.'+m, v,
                           interval=interval,
@@ -351,7 +353,7 @@ class MgmtbusMaster(object):
                     interval=interval
                 )
 
-        for gs, v in gstats.items():
+        for gs, v in list(gstats.items()):
             type_ = 'minemeld_delta'
             if gs.endswith('length'):
                 type_ = 'minemeld_counter'
@@ -405,7 +407,7 @@ class MgmtbusMaster(object):
                 result = revt.get(block=False)
 
                 with self._status_lock:
-                    for nodename, nodestatus in result['answers'].items():
+                    for nodename, nodestatus in list(result['answers'].items()):
                         self._merge_status(nodename, nodestatus)
 
                 try:

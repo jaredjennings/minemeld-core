@@ -17,6 +17,7 @@ This module implements minemeld.ft.json.SimpleJSON, the Miner node for JSON
 feeds over HTTP/HTTPS.
 """
 
+from builtins import str
 import requests
 import logging
 import jmespath
@@ -198,7 +199,7 @@ class SimpleJSON(basepoller.BasePollerFT):
 
         indicator = item[self.indicator]
         if not (isinstance(indicator, str) or
-                isinstance(indicator, unicode)):
+                isinstance(indicator, str)):
             LOG.error(
                 'Wrong indicator type: %s - %s',
                 indicator, type(indicator)
@@ -207,7 +208,7 @@ class SimpleJSON(basepoller.BasePollerFT):
 
         fields = self.fields
         if fields is None:
-            fields = item.keys()
+            fields = list(item.keys())
             fields.remove(self.indicator)
 
         attributes = {}

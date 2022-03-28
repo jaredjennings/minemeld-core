@@ -14,6 +14,8 @@
 
 from __future__ import absolute_import
 
+from builtins import map
+from builtins import str
 import logging
 import itertools
 import functools
@@ -165,10 +167,10 @@ class AzureXML(basepoller.BasePollerFT):
             LOG.debug('%s - Extracting region: %s', self.name, r.get('Name'))
 
             ipranges = r.xpath('IpRange')
-            _iterators.append(itertools.imap(
+            _iterators.append(list(map(
                 functools.partial(_build_IPv4, self.name, r.get('Name')),
                 ipranges
-            ))
+            )))
 
         return itertools.chain(*_iterators)
 
@@ -254,7 +256,7 @@ class AzureJSON(basepoller.BasePollerFT):
             platform = props.get('platform', None)
             system_service = props.get('systemService', None)
             address_prefixes = props.get('addressPrefixes', [])
-            _iterators.append(itertools.imap(
+            _iterators.append(list(map(
                 functools.partial(
                     _build_IP,
                     self.name,
@@ -265,7 +267,7 @@ class AzureJSON(basepoller.BasePollerFT):
                     azure_system_service=system_service
                 ),
                 address_prefixes
-            ))
+            )))
 
         # aggregate indicators
         aggregated_indicators = defaultdict(lambda: dict(
@@ -279,15 +281,15 @@ class AzureJSON(basepoller.BasePollerFT):
             cv = aggregated_indicators[i['indicator']]
             cv.update(i)
 
-            for k, v in i.items():
+            for k, v in list(i.items()):
                 cv[k] = v
                 if k.startswith('azure_'):
                     cv['{}_list'.format(k)].add(str(v).lower())
 
         # convert sets into lists
-        for iv in aggregated_indicators.values():
-            for k in iv.keys():
+        for iv in list(aggregated_indicators.values()):
+            for k in list(iv.keys()):
                 if isinstance(iv[k], set):
                     iv[k] = list(iv[k])
 
-        return iter(aggregated_indicators.values())
+        return iter(list(aggregated_indicators.values()))

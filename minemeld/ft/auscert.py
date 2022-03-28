@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
 import requests
 import logging
 import itertools
@@ -89,10 +90,7 @@ class MaliciousURLFeed(http.HttpFT):
 
         result = r.iter_lines()
         if self.ignore_regex is not None:
-            result = itertools.ifilter(
-                lambda x: self.ignore_regex.match(x) is None,
-                result
-            )
+            result = [x for x in result if self.ignore_regex.match(x) is None]
 
         return result
 

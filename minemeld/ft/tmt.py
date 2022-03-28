@@ -13,7 +13,10 @@
 #  limitations under the License.
 
 from __future__ import absolute_import
+from __future__ import division
 
+from builtins import str
+from past.utils import old_div
 import logging
 import requests
 import os
@@ -96,7 +99,7 @@ class DTIAPI(basepoller.BasePollerFT):
         domain = row.pop('host_name', None)
 
         value = {}
-        for k, v in row.items():
+        for k, v in list(row.items()):
             if k == 'last_sample_timestamp':
                 value['tmt_last_sample_timestamp'] = int(v)*1000
                 continue
@@ -113,7 +116,7 @@ class DTIAPI(basepoller.BasePollerFT):
         type_, indicator = item[0].split(':', 1)
 
         value = {}
-        for k, v in item[1].items():
+        for k, v in list(item[1].items()):
             value[k] = v
         value['type'] = type_
 
@@ -126,7 +129,7 @@ class DTIAPI(basepoller.BasePollerFT):
             self.ttable.put(indicator, value)
             return
 
-        for k, v in value.items():
+        for k, v in list(value.items()):
             if k == 'tmt_last_sample_timestamp':
                 if v > ov[k]:  # confusing, this is just for PEP8 sake
                     ov[k] = v
@@ -149,7 +152,7 @@ class DTIAPI(basepoller.BasePollerFT):
 
         last_fetch = self.last_run
         if last_fetch is None:
-            last_fetch = int(now/1000) - self.initial_interval
+            last_fetch = int(old_div(now,1000)) - self.initial_interval
 
         params = dict(
             key=self.api_key,
@@ -177,10 +180,7 @@ class DTIAPI(basepoller.BasePollerFT):
                       self.name, r.status_code, r.content)
             raise
 
-        response = itertools.ifilter(
-            lambda x: not x.startswith('got commandoptions'),
-            r.raw
-        )
+        response = [x for x in r.raw if not x.startswith('got commandoptions')]
 
         csvreader = csv.DictReader(
             response,

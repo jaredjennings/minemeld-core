@@ -12,13 +12,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from future import standard_library
+standard_library.install_aliases()
 import os
 import time
 from signal import SIGHUP
 
 import psutil
 import gevent
-import xmlrpclib
+import xmlrpc.client
 import supervisor.xmlrpc
 
 from flask import jsonify
@@ -40,7 +42,7 @@ def _restart_engine():
 
     supervisorurl = config.get('SUPERVISOR_URL',
                                'unix:///var/run/supervisor.sock')
-    sserver = xmlrpclib.ServerProxy(
+    sserver = xmlrpc.client.ServerProxy(
         'http://127.0.0.1',
         transport=supervisor.xmlrpc.SupervisorTransport(
             None,
@@ -55,7 +57,7 @@ def _restart_engine():
             LOG.error('Stop minemeld-engine returned False')
             return
 
-    except xmlrpclib.Fault as e:
+    except xmlrpc.client.Fault as e:
         LOG.error('Error stopping minemeld-engine: {!r}'.format(e))
 
     LOG.info('Stopped minemeld-engine for API request')

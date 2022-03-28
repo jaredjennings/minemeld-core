@@ -14,6 +14,7 @@
 
 from __future__ import absolute_import
 
+from builtins import str
 import logging
 import redis
 import os
@@ -177,7 +178,7 @@ class RedisSet(actorbase.ActorBaseFT):
         score = 0
         if self.scoring_attribute is not None:
             av = value.get(self.scoring_attribute, None)
-            if type(av) == int or type(av) == long:
+            if type(av) == int or type(av) == int:
                 score = av
             else:
                 LOG.error("scoring_attribute is not int: %s", type(av))

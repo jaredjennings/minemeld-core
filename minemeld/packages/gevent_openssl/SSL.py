@@ -1,6 +1,7 @@
 """gevent_openssl.SSL - gevent compatibility with OpenSSL.SSL (pyOpenSSL)
 """
 
+from builtins import object
 import logging
 
 import OpenSSL.SSL

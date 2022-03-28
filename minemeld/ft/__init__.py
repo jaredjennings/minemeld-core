@@ -1,3 +1,4 @@
+from builtins import object
 from minemeld.loader import load, MM_NODES_ENTRYPOINT
 
 

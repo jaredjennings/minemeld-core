@@ -18,6 +18,8 @@ minemeld.collectd
 Provides a client to collectd for storing metrics.
 """
 
+from builtins import range
+from builtins import object
 import socket
 import logging
 

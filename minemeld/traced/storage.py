@@ -15,11 +15,17 @@
 """
 This module implements the storage mechansim for the mm-traced daemon
 """
+from __future__ import division
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from past.utils import old_div
+from builtins import object
 import logging
 import datetime
 import time
-import Queue
+import queue
 import os
 import os.path
 
@@ -246,7 +252,7 @@ class Store(object):
 
         # garbage collect
         candidate = None
-        for _, table in self.current_tables.items():
+        for _, table in list(self.current_tables.items()):
             if table.ref_count() != 0:
                 continue
 
@@ -292,7 +298,7 @@ class Store(object):
         except IndexError:
             return
 
-        except Queue.Empty:
+        except queue.Empty:
             return
 
     def _release(self, table, ref):
@@ -304,7 +310,7 @@ class Store(object):
         if self._stop.is_set():
             raise RuntimeError('stopping')
 
-        tssec = timestamp/1000
+        tssec = old_div(timestamp,1000)
         day = '%016x' % (tssec - (tssec % 86400))
 
         table = self._get_table(day, 'write')
@@ -322,7 +328,7 @@ class Store(object):
         if self._stop.is_set():
             raise RuntimeError('stopping')
 
-        tssec = timestamp/1000
+        tssec = old_div(timestamp,1000)
         current_day = (tssec - (tssec % 86400))
 
         oldest_table = Table.oldest_table()
@@ -387,7 +393,7 @@ class Store(object):
             raise RuntimeError('stopping')
 
         self.current_tables_lock.acquire()
-        for t in self.current_tables.values():
+        for t in list(self.current_tables.values()):
             t.remove_reference(ref)
         self.current_tables_lock.release()
 
@@ -401,7 +407,7 @@ class Store(object):
 
         self._stop.set()
         self.current_tables_lock.acquire()
-        for t in self.current_tables.keys():
+        for t in list(self.current_tables.keys()):
             self.current_tables[t].close()
             self.current_tables.pop(t, None)
         self.current_tables_lock.release()

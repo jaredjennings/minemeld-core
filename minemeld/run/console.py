@@ -13,6 +13,7 @@ from __future__ import print_function
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
 import gevent
 import gevent.monkey
 gevent.monkey.patch_all(thread=False, select=False)

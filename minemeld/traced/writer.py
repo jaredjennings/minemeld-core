@@ -16,6 +16,7 @@
 This module implements the writer class for logs
 """
 
+from builtins import object
 import logging
 
 import psutil

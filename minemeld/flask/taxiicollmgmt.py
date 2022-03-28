@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import filter
 import re
 
 import libtaxii
@@ -39,10 +40,10 @@ BLUEPRINT = MMBlueprint('taxiicollmgmt', __name__, url_prefix='')
 @taxii_check
 def taxii_collection_mgmt_service():
     taxii_feeds = get_taxii_feeds()
-    authorized_feeds = filter(
+    authorized_feeds = list(filter(
         current_user.check_feed,
         taxii_feeds
-    )
+    ))
     if len(authorized_feeds) == 0:
         return 'Unauthorized', 401
 

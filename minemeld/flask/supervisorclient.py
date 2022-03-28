@@ -1,7 +1,9 @@
+from future import standard_library
+standard_library.install_aliases()
 from flask import g
 
 import psutil  # noqa
-import xmlrpclib
+import xmlrpc.client
 import supervisor.xmlrpc
 import werkzeug.local
 
@@ -16,7 +18,7 @@ def get_Supervisor():
     if sserver is None:
         supervisorurl = config.get('SUPERVISOR_URL',
                                    'unix:///var/run/supervisor.sock')
-        sserver = xmlrpclib.ServerProxy(
+        sserver = xmlrpc.client.ServerProxy(
             'http://127.0.0.1',
             transport=supervisor.xmlrpc.SupervisorTransport(
                 None,

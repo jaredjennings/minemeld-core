@@ -19,6 +19,8 @@ feeds over HTTP/HTTPS.
 
 from __future__ import absolute_import
 
+from builtins import map
+from builtins import str
 import logging
 import re
 import os.path
@@ -178,10 +180,7 @@ class CSVFT(basepoller.BasePollerFT):
             response = self._gzipped_line_splitter(r)
 
         if self.ignore_regex is not None:
-            response = itertools.ifilter(
-                lambda x: self.ignore_regex.match(x) is None,
-                response
-            )
+            response = [x for x in response if self.ignore_regex.match(x) is None]
 
         csvreader = csv.DictReader(
             response,
@@ -196,10 +195,10 @@ class CSVFT(basepoller.BasePollerFT):
         pending = None
 
         decoder = GzipDecoder()
-        chunks = itertools.imap(
+        chunks = list(map(
             decoder.decompress,
             response.iter_content(chunk_size=1024*1024)
-        )
+        ))
 
         for chunk in chunks:
             if pending is not None:

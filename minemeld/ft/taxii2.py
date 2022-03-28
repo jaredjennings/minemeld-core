@@ -13,7 +13,10 @@
 #  limitations under the License.
 
 from __future__ import absolute_import
+from __future__ import division
 
+from builtins import str
+from past.utils import old_div
 import logging
 import os
 import yaml
@@ -312,7 +315,7 @@ class Taxii2Client(basepoller.BasePollerFT):
             indicators = []
 
             # noinspection PyCompatibility
-            for i_type, i_patterns in comparisons.items():
+            for i_type, i_patterns in list(comparisons.items()):
                 # The Pattern Inspector buckets each comparison expression in the observable expression based on type
                 if i_type in _STIX2_TYPES_TO_MM_TYPES:
                     # The Pattern Inspector reduces the observable expression into a flat list of comparison expressions
@@ -354,7 +357,7 @@ class Taxii2Client(basepoller.BasePollerFT):
                 if 'type' in obj and obj['type'] in types:
                     yield obj
                 else:
-                    objs.extend(obj.values())
+                    objs.extend(list(obj.values()))
             elif isinstance(obj, list):
                 objs.extend(obj)
 
@@ -545,10 +548,10 @@ class Taxii2Client(basepoller.BasePollerFT):
         if last_run is None or last_run < max_back:
             last_run = max_back
 
-        begin = datetime.utcfromtimestamp(last_run / 1000)
+        begin = datetime.utcfromtimestamp(old_div(last_run, 1000))
         begin = begin.replace(tzinfo=pytz.UTC)
 
-        end = datetime.utcfromtimestamp(now / 1000)
+        end = datetime.utcfromtimestamp(old_div(now, 1000))
         end = end.replace(tzinfo=pytz.UTC)
 
         if self.lower_timestamp_precision:

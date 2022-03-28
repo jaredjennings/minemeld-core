@@ -17,6 +17,8 @@ This module implements minemeld.ft.visa.VTI, the Miner node for
 Visa Threat Intelligence API.
 """
 from __future__ import absolute_import
+from __future__ import division
+from past.utils import old_div
 import logging
 import requests
 import re
@@ -64,7 +66,7 @@ class VTI(json.SimpleJSON):
 
         indicator = item[self.indicator]
         if not (isinstance(indicator, str) or
-                isinstance(indicator, unicode)):
+                isinstance(indicator, str)):
             LOG.error(
                 'Wrong indicator type: %s - %s',
                 indicator, type(indicator)
@@ -93,7 +95,7 @@ class VTI(json.SimpleJSON):
 
         fields = self.fields
         if fields is None:
-            fields = item.keys()
+            fields = list(item.keys())
             fields.remove(self.indicator)
 
         if 'indicatorType' in fields:
@@ -134,8 +136,8 @@ class VTI(json.SimpleJSON):
         if self.last_vti_run is None:
             self.last_vti_run = self.last_successful_run
 
-        start_date = datetime.fromtimestamp(self.last_vti_run / 1000)
-        end_date = datetime.fromtimestamp(utc_millisec() / 1000)
+        start_date = datetime.fromtimestamp(old_div(self.last_vti_run, 1000))
+        end_date = datetime.fromtimestamp(old_div(utc_millisec(), 1000))
 
         payload = {'startDate': start_date.strftime('%Y-%m-%d'),
                    'endDate': end_date.strftime('%Y-%m-%d')}
@@ -182,7 +184,7 @@ class VTI(json.SimpleJSON):
         return None
 
     def _detect_sha_version(self, hash_value):
-        for hash_type, re_obj in self.hash_patterns.items():
+        for hash_type, re_obj in list(self.hash_patterns.items()):
             if re_obj.match(hash_value) is not None:
                 return hash_type
         return None

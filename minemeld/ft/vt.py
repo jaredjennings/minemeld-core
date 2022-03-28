@@ -18,6 +18,7 @@ This module implements:
   feed
 """
 
+from builtins import str
 import logging
 import os
 import yaml
@@ -69,7 +70,7 @@ class Notifications(json.SimpleJSON):
         result = []
 
         for htype in ['md5', 'sha256', 'sha1']:
-            value = {self.prefix+'_'+k: v for k, v in item.items()}
+            value = {self.prefix+'_'+k: v for k, v in list(item.items())}
             indicator = value.pop(self.prefix+'_'+htype, None)
             value['type'] = htype
 

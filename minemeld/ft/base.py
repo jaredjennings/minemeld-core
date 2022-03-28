@@ -18,6 +18,7 @@ This module implements minemeld.ft.base.BaseFT, the base class for nodes.
 
 from __future__ import absolute_import
 
+from builtins import object
 import logging
 import copy
 import os
@@ -418,7 +419,7 @@ class BaseFT(object):
             return
 
         if value is not None:
-            for k in value.keys():
+            for k in list(value.keys()):
                 if k[0] in ['_', '$']:
                     value.pop(k)
 
@@ -446,7 +447,7 @@ class BaseFT(object):
             return
 
         if value is not None:
-            for k in value.keys():
+            for k in list(value.keys()):
                 if k[0] in ['_', '$']:
                     value.pop(k)
 
@@ -483,7 +484,7 @@ class BaseFT(object):
             raise AssertionError("update received from checkpointed source")
 
         if value is not None:
-            for k in value.keys():
+            for k in list(value.keys()):
                 if k.startswith("_"):
                     value.pop(k)
 
@@ -545,7 +546,7 @@ class BaseFT(object):
             return
 
         if fltvalue is not None:
-            for k in fltvalue.keys():
+            for k in list(fltvalue.keys()):
                 if k.startswith("_"):
                     fltvalue.pop(k)
 
@@ -572,7 +573,7 @@ class BaseFT(object):
             raise AssertionError("checkpoint received with state not STARTED "
                                  "or CHECKPOINT")
 
-        for v in self.inputs_checkpoint.values():
+        for v in list(self.inputs_checkpoint.values()):
             if v != value:
                 LOG.error("different checkpoint value received")
                 raise AssertionError("different checkpoint value received")

@@ -1,3 +1,4 @@
+from __future__ import division
 #  Copyright 2015-2016 Palo Alto Networks, Inc
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from past.utils import old_div
 import datetime
 
 import pytz
@@ -51,7 +53,7 @@ def _oldest_indicator_timestamp(feed):
     if len(olist) == 0:
         return None
 
-    ots = int(olist[0][1])/1000
+    ots = old_div(int(olist[0][1]),1000)
 
     return datetime.datetime.fromtimestamp(ots, pytz.utc)
 

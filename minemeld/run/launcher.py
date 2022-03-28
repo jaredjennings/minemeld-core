@@ -13,7 +13,10 @@
 #  limitations under the License.
 
 from __future__ import print_function
+from __future__ import division
 
+from builtins import range
+from past.utils import old_div
 import gevent
 import gevent.monkey
 gevent.monkey.patch_all(thread=False, select=False)
@@ -234,7 +237,7 @@ def main():
         return 2
 
     np = min(
-        int(math.ceil(len(config.nodes)/npc)),
+        int(math.ceil(old_div(len(config.nodes),npc))),
         np
     )
     LOG.info("Number of chassis: %d", np)
@@ -281,7 +284,7 @@ def main():
             config=config.mgmtbus['master'],
             comm_class=config.mgmtbus['transport']['class'],
             comm_config=config.mgmtbus['transport']['config'],
-            nodes=config.nodes.keys(),
+            nodes=list(config.nodes.keys()),
             num_chassis=len(processes)
         )
         mbusmaster.start()

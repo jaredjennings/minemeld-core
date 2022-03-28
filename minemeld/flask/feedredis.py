@@ -12,7 +12,12 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import cStringIO
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import zip
+from past.builtins import basestring
+import io
 import json
 import re
 from collections import defaultdict
@@ -69,7 +74,7 @@ def _extract_cidrs(indicator):
 
 @contextmanager
 def _buffer():
-    result = cStringIO.StringIO()
+    result = io.StringIO()
 
     try:
         yield result
@@ -199,7 +204,7 @@ def generate_json_feed(feed, start, num, desc, value, **kwargs):
         ilist = zrange(feed, cstart,
                        cstart - 1 + min(start + num - cstart, FEED_INTERVAL))
 
-        result = cStringIO.StringIO()
+        result = io.StringIO()
 
         for indicator in ilist:
             v = SR.hget(feed + '.value', indicator)
@@ -244,7 +249,7 @@ def generate_json_feed(feed, start, num, desc, value, **kwargs):
 
 def generate_csv_feed(feed, start, num, desc, value, **kwargs):
     def _is_atomic_type(fv):
-        return (isinstance(fv, unicode) or isinstance(fv, str) or isinstance(fv, int) or isinstance(fv, bool))
+        return (isinstance(fv, str) or isinstance(fv, str) or isinstance(fv, int) or isinstance(fv, bool))
 
     def _format_field_value(fv):
         if _is_atomic_type(fv):
@@ -441,7 +446,7 @@ def generate_bluecoat_feed(feed, start, num, desc, value, **kwargs):
         for bc_cat in bc_cat_list:
             bc_dict[bc_cat].append(i)
 
-    for key, value in bc_dict.items():
+    for key, value in list(bc_dict.items()):
         yield 'define category {}\n'.format(key)
         for ind in value:
             yield ind + '\n'

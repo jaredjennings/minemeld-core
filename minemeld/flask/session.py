@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
 import os
 from datetime import timedelta
 from uuid import uuid4

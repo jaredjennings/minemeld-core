@@ -72,6 +72,7 @@ over the keys (2,<index id>,0xF0,<encoded value>) and
 (2,<index id>,0xF0,<encoded value>,0xFF..FF)
 """
 
+from builtins import object
 import os
 import plyvel
 import struct
@@ -217,14 +218,14 @@ class Table(object):
         self._compact_glet = None
 
     def exists(self, key):
-        if type(key) == unicode:
+        if type(key) == str:
             key = key.encode('utf8')
 
         ikeyv = self._indicator_key_version(key)
         return (self._get(ikeyv) is not None)
 
     def get(self, key):
-        if type(key) == unicode:
+        if type(key) == str:
             key = key.encode('utf8')
 
         ikey = self._indicator_key(key)
@@ -236,7 +237,7 @@ class Table(object):
         return ujson.loads(value[8:])
 
     def delete(self, key):
-        if type(key) == unicode:
+        if type(key) == str:
             key = key.encode('utf8')
 
         ikey = self._indicator_key(key)
@@ -261,12 +262,12 @@ class Table(object):
     def _index_key(self, idxid, value, lastidxid=None):
         key = struct.pack("BBB", 2, idxid, 0xF0)
 
-        if type(value) == unicode:
+        if type(value) == str:
             value = value.encode('utf8')
 
         if type(value) == str:
             key += struct.pack(">BL", 0x0, len(value))+value
-        elif type(value) == int or type(value) == long:
+        elif type(value) == int or type(value) == int:
             key += struct.pack(">BQ", 0x1, value)
         else:
             raise ValueError("Unhandled value type: %s" % type(value))
@@ -286,7 +287,7 @@ class Table(object):
         if len(self.indexes) == 0:
             idxid = 0
         else:
-            idxid = max([i['id'] for i in self.indexes.values()])+1
+            idxid = max([i['id'] for i in list(self.indexes.values())])+1
 
         self.indexes[attribute] = {
             'id': idxid,
@@ -298,7 +299,7 @@ class Table(object):
         batch.write()
 
     def put(self, key, value):
-        if type(key) == unicode:
+        if type(key) == str:
             key = key.encode('utf8')
 
         if type(value) != dict:
@@ -327,7 +328,7 @@ class Table(object):
                 struct.pack(">Q", self.num_indicators)
             )
 
-        for iattr, index in self.indexes.items():
+        for iattr, index in list(self.indexes.items()):
             v = value.get(iattr, None)
             if v is None:
                 continue
@@ -347,9 +348,9 @@ class Table(object):
     def query(self, index=None, from_key=None, to_key=None,
               include_value=False, include_stop=True, include_start=True,
               reverse=False):
-        if type(from_key) is unicode:
+        if type(from_key) is str:
             from_key = from_key.encode('ascii', 'replace')
-        if type(to_key) is unicode:
+        if type(to_key) is str:
             to_key = to_key.encode('ascii', 'replace')
 
         if index is None:
@@ -471,7 +472,7 @@ class Table(object):
                 gevent.idle()
 
                 counter = 0
-                for idx in self.indexes.keys():
+                for idx in list(self.indexes.keys()):
                     for i in self.query(index=idx, include_value=False):
                         if counter % 512 == 0:
                             gevent.sleep(0.001)  # yield to other greenlets
@@ -515,7 +516,7 @@ class Table(object):
 
         LOG.info('Scanning indexes...')
         last_global_id = 0
-        for i, idata in indexes.items():
+        for i, idata in list(indexes.items()):
             from_key = struct.pack("BBB", 2, idata['id'], 0xF0)
             include_start = False
             to_key = struct.pack("BBB", 2, idata['id'], 0xF1)

@@ -16,6 +16,8 @@
 This module implements the query processor for mm-traced daemon
 """
 
+from builtins import next
+from builtins import object
 import logging
 import calendar
 import time
@@ -260,6 +262,6 @@ class QueryProcessor(object):
 
         self._stop.set()
         self.queries_lock.acquire()
-        for _, gquery in self.queries.items():
+        for _, gquery in list(self.queries.items()):
             gquery.kill()
         self.queries_lock.release()

@@ -14,6 +14,9 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
+from builtins import next
+from builtins import range
+from builtins import object
 import pprint
 import random
 import sys
@@ -181,7 +184,7 @@ class PanForest(object):
         """return iterator of seconds to sleep until log match"""
 
         try:
-            xrange(1)
+            list(range(1))
         except NameError:
             _range = range
         else:

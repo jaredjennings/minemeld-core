@@ -13,6 +13,7 @@ from __future__ import print_function
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
 import logging
 import argparse
 import sys
@@ -79,7 +80,7 @@ def main():
             if loaded_config is not None:
                 config.update(loaded_config)
 
-    config.update({k: v for k, v in vars(args).items() if v is not None})
+    config.update({k: v for k, v in list(vars(args).items()) if v is not None})
     LOG.info('config: {}'.format(config))
 
     if not config['no_merge_certifi'] and CERTIFI_WHERE:
@@ -117,7 +118,7 @@ def main():
     else:
         x = sys.stdin.read()
         try:
-            x = unicode(x)
+            x = str(x)
         except NameError:
             # 3.x
             pass

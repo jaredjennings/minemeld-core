@@ -14,6 +14,8 @@
 
 from __future__ import absolute_import
 
+from builtins import str
+from builtins import range
 import logging
 import yaml
 import netaddr
@@ -160,7 +162,7 @@ class DevicePusher(gevent.Greenlet):
         result = []
 
         def _tag(t, v):
-            if type(v) == unicode:
+            if type(v) == str:
                 v = v.encode('ascii', 'replace')
             else:
                 v = str(v)
@@ -253,7 +255,7 @@ class DevicePusher(gevent.Greenlet):
             ctags.pop(a)
 
         # ips not in firewall
-        for a, atags in ctags.items():
+        for a, atags in list(ctags.items()):
             register[a] = atags
 
         LOG.debug('register %s', register)
@@ -262,7 +264,7 @@ class DevicePusher(gevent.Greenlet):
         # XXX use constant for chunk size
         if len(register) != 0:
             addrs = iter(register)
-            for i in xrange(0, len(register), 1000):
+            for i in range(0, len(register), 1000):
                 rmsg = self._dag_message(
                     'register',
                     {k: register[k] for k in itertools.islice(addrs, 1000)}
@@ -271,7 +273,7 @@ class DevicePusher(gevent.Greenlet):
 
         if len(unregister) != 0:
             addrs = iter(unregister)
-            for i in xrange(0, len(unregister), 1000):
+            for i in range(0, len(unregister), 1000):
                 urmsg = self._dag_message(
                     'unregister',
                     {k: unregister[k] for k in itertools.islice(addrs, 1000)}

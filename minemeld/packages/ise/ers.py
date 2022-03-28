@@ -22,6 +22,8 @@ on PAN-OS.
 See ERS SDK page at: https://ise:9060/ers/sdk
 '''
 
+from builtins import str
+from builtins import object
 from collections import defaultdict
 import inspect
 import logging
@@ -41,7 +43,7 @@ except ImportError:
 _None = object()
 
 
-class IseErsRequest:
+class IseErsRequest(object):
     def __init__(self, name=None):
         self.name = name
         # python-requests
@@ -68,7 +70,7 @@ class IseErsError(Exception):
     pass
 
 
-class IseErs:
+class IseErs(object):
     def __init__(self,
                  hostname=None,
                  username=None,

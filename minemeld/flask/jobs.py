@@ -12,6 +12,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
+from builtins import object
 import os
 import uuid
 import tempfile
@@ -209,7 +211,7 @@ class JobsManager(object):
 
         jobs_map = self.SR.hgetall(prefix)
 
-        for jobid, jobdata in jobs_map.items():
+        for jobid, jobdata in list(jobs_map.items()):
             try:
                 jobdata = json.loads(jobdata)
 

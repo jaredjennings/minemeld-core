@@ -12,6 +12,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from builtins import str
+from builtins import object
 import json
 import base64
 from functools import wraps
@@ -188,7 +190,7 @@ class MMAnonynmousUser(object):
 
 class MMAuthenticatedUser(object):
     def __init__(self, _id=None):
-        self._id = unicode(_id)
+        self._id = str(_id)
 
     def get_id(self):
         return self._id
@@ -212,7 +214,7 @@ class MMAuthenticatedAdminUser(MMAuthenticatedUser):
         if read_write is None:
             return True
 
-        if isinstance(read_write, str) or isinstance(read_write, unicode):
+        if isinstance(read_write, str) or isinstance(read_write, str):
             read_write = read_write.split(',')
         elif not isinstance(read_write, list):
             LOG.error('Unknown READ_WRITE format')

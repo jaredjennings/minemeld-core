@@ -21,6 +21,9 @@ This module implements ZMQ and Redis communication class for mgmtbus and fabric.
 
 from __future__ import absolute_import
 
+from builtins import str
+from builtins import range
+from builtins import object
 import logging
 import uuid
 import os
@@ -760,7 +763,7 @@ class ZMQRedis(object):
         for rfcc in self.rpc_fanout_clients_channels:
             rfcc.connect(self.context)
 
-        for rpcc in self.rpc_server_channels.values():
+        for rpcc in list(self.rpc_server_channels.values()):
             rpcc.connect(self.context)
 
         for sc in self.sub_channels:
@@ -784,7 +787,7 @@ class ZMQRedis(object):
             self.ioloops.append(g)
             g.link_exception(self._ioloop_failure)
 
-        for rpcc in self.rpc_server_channels.values():
+        for rpcc in list(self.rpc_server_channels.values()):
             g = gevent.spawn(self._ioloop, rpcc)
             self.ioloops.append(g)
             g.link_exception(self._ioloop_failure)
@@ -801,14 +804,14 @@ class ZMQRedis(object):
 
     def stop(self):
         # kill ioloops
-        for j in xrange(len(self.ioloops)):
+        for j in range(len(self.ioloops)):
             self.ioloops[j].unlink(self._ioloop_failure)
             self.ioloops[j].kill()
             self.ioloops[j] = None
         self.ioloops = None
 
         # close channels
-        for rpcc in self.rpc_server_channels.values():
+        for rpcc in list(self.rpc_server_channels.values()):
             try:
                 rpcc.disconnect()
             except Exception:
