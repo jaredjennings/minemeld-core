@@ -27,7 +27,7 @@ import time
 import shutil
 import logging
 
-import guppy  # noqa
+import guppy3  # noqa
 import pdb  # noqa
 import gc  # noqa
 

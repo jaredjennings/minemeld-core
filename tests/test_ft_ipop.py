@@ -29,7 +29,7 @@ import logging
 import netaddr
 import random
 
-import guppy  # noqa
+import guppy3  # noqa
 import pdb  # noqa
 import gc  # noqa
 

@@ -31,7 +31,7 @@ import mock
 import json
 import ujson
 import logging
-import guppy
+import guppy3
 import gc
 
 import minemeld.traced.queryprocessor
