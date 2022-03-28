@@ -712,7 +712,7 @@ class BasePollerFT(base.BaseFT):
 
         if aggregation_exc is not None:
             LOG.info('{} - Reraising exception happened during aggregation'.format(self.name))
-raise_(aggregation_exc[0], aggregation_exc[1], aggregation_exc[2])
+            raise_(aggregation_exc[0], aggregation_exc[1], aggregation_exc[2])
 
         return True
 
