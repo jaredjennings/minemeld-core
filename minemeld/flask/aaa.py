@@ -20,7 +20,8 @@ from functools import wraps
 
 import gevent
 import gevent.lock
-import flask.ext.login
+# import flask.ext.login
+from flask_login import LoginManager
 from flask import current_app, Blueprint, request
 
 from . import config
@@ -74,7 +75,7 @@ class MMBlueprint(Blueprint):
 
         @wraps(f)
         def audited_view(*args, **kwargs):
-            if request and flask.ext.login.current_user:
+            if request and LoginManager.current_user:
                 params = []
 
                 for key, values in request.values.iterlists():
@@ -91,7 +92,7 @@ class MMBlueprint(Blueprint):
                     params.append(['jsonbody', json.dumps(body)[:1024]])
 
                 LOG.audit(
-                    user_id=flask.ext.login.current_user.get_id(),
+                    user_id=LoginManager.current_user.get_id(),
                     action_name='{} {}'.format(request.method, request.path),
                     params=params
                 )
@@ -116,12 +117,12 @@ class MMBlueprint(Blueprint):
                 return f(*args, **kwargs)
 
             if not feeds:
-                if not flask.ext.login.current_user.is_authenticated():
+                if not LoginManager.current_user.is_authenticated():
                     return current_app.login_manager.unauthorized()
-                if flask.ext.login.current_user.get_id().startswith('feeds/'):
+                if LoginManager.current_user.get_id().startswith('feeds/'):
                     return current_app.login_manager.unauthorized()
 
-            if read_write and not flask.ext.login.current_user.is_read_write():
+            if read_write and not LoginManager.current_user.is_read_write():
                 return 'Forbidden', 403
 
             return f(*args, **kwargs)
@@ -272,7 +273,7 @@ def authenticated_user_factory(_id):
     raise RuntimeError('Unknown user_id prefix: {}'.format(_id))
 
 
-LOGIN_MANAGER = flask.ext.login.LoginManager()
+LOGIN_MANAGER = LoginManager.LoginManager()
 LOGIN_MANAGER.session_protection = None
 LOGIN_MANAGER.anonymous_user = MMAnonynmousUser
 
