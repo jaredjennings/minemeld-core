@@ -18,7 +18,7 @@ Unit tests for minemeld.ft.base
 """
 
 import unittest
-import mock
+from unittest import mock
 import gevent
 
 import minemeld.ft.base

@@ -23,7 +23,7 @@ import gevent.monkey
 gevent.monkey.patch_all(thread=False, select=False)
 
 import unittest
-import mock
+from unittest import mock
 import time
 import shutil
 import logging

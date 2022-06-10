@@ -21,7 +21,7 @@ import unittest
 import shutil
 import time
 import logging
-import mock
+from unittest import mock
 import gevent
 import socket
 import gc

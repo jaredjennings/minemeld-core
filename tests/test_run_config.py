@@ -18,7 +18,7 @@ Unit tests for minemeld.run.config
 """
 
 import unittest
-import mock
+from unittest import mock
 
 import os
 import os.path

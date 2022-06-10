@@ -22,7 +22,7 @@ import tempfile
 import shutil
 import random
 import time
-import mock
+from unittest import mock
 import logging
 
 from nose.plugins.attrib import attr

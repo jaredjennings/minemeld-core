@@ -18,7 +18,7 @@ Unit tests for minemeld.ft.logstash
 """
 
 import unittest
-import mock
+from unittest import mock
 import time
 
 import minemeld.ft.logstash
