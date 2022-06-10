@@ -22,7 +22,7 @@ pytz>=2015.4
 certifi
 ujson>=5.1.0
 filelock>=2.0.4
-sleekxmpp>=1.3.1
+slixmpp>=1.8.2
 beautifulsoup4>=4.4.1
 cifsdk>=4.0
 lz4>=2.2.1
