@@ -28,6 +28,7 @@ from flask import request, jsonify, Response, stream_with_context
 from flask.ext.login import current_user
 from gevent import sleep
 from netaddr import IPRange, IPNetwork, IPSet, iprange_to_cidrs
+from netaddr import AddrFormatError
 
 from .aaa import MMBlueprint
 from .cbfeed import CbFeedInfo, CbReport

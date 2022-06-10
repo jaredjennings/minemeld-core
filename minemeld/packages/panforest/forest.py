@@ -183,14 +183,8 @@ class PanForest(object):
     def _sleeper(self):
         """return iterator of seconds to sleep until log match"""
 
-        try:
-            list(range(1))
-        except NameError:
-            _range = range
-        else:
-            _range = xrange
-
-        x = _range(1, 60, 3)
+        # xrange is no more in python 3; just use range
+        x = range(1, 60, 3)
 
         return iter(x)
 

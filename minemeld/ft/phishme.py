@@ -280,7 +280,7 @@ class Intelligence(basepoller.BasePollerFT):
             cjson = r.json()
 
             data = cjson.get('data', None)
-            if 'data' is None:
+            if data is None:
                 LOG.error('%s - no "data" in response', self.name)
                 return
 

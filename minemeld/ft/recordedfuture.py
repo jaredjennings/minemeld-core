@@ -478,7 +478,7 @@ class MasterRiskList(csv.CSVFT):
 
     @staticmethod
     def gc(name, config=None):
-        csvhelper.CSVFT.gc(name, config=config)
+        csv.CSVFT.gc(name, config=config)
 
         side_config_path = None
         if config is not None:
