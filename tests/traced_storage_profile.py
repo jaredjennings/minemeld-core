@@ -11,13 +11,13 @@ if __name__ == "__main__":
     store = minemeld.traced.storage.Store()
 
     t1 = time.time()
-    for j in xrange(num_lines):
+    for j in range(num_lines):
         value = '{ "log": %d }' % random.randint(0, 0xFFFFFFFF)
     t2 = time.time()
     dt = t2-t1
 
     t1 = time.time()
-    for j in xrange(num_lines):
+    for j in range(num_lines):
         value = '{ "log": %d }' % random.randint(0, 0xFFFFFFFF)
         store.write(j, value)
     t2 = time.time()
