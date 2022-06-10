@@ -77,7 +77,7 @@ class MineMeldFTTableTests(unittest.TestCase):
         table.create_index('a')
 
         num_below_500 = 0
-        for i in xrange(NUM_ELEMENTS):
+        for i in range(NUM_ELEMENTS):
             value = {'a': random.randint(0, 1000)}
             key = 'i%d' % i
             table.put(key, value)
@@ -96,13 +96,13 @@ class MineMeldFTTableTests(unittest.TestCase):
         table = minemeld.ft.table.Table(TABLENAME)
         table.create_index('a')
 
-        for i in xrange(NUM_ELEMENTS):
+        for i in range(NUM_ELEMENTS):
             value = {'a': 1483184218151+random.randint(600, 1000)}
             key = 'i%d' % i
             table.put(key, value)
 
         num_below_500 = 0
-        for i in xrange(NUM_ELEMENTS):
+        for i in range(NUM_ELEMENTS):
             value = {'a': 1483184218151+random.randint(0, 1000)}
             key = 'i%d' % i
             table.put(key, value)
@@ -121,17 +121,17 @@ class MineMeldFTTableTests(unittest.TestCase):
         table = minemeld.ft.table.Table(TABLENAME)
         table.create_index('a')
 
-        for i in xrange(NUM_ELEMENTS):
+        for i in range(NUM_ELEMENTS):
             value = {'a': 1483184218151+random.randint(0, 500)}
             key = 'i%d' % i
             table.put(key, value)
 
-        for i in xrange(NUM_ELEMENTS):
+        for i in range(NUM_ELEMENTS):
             key = 'i%d' % i
             table.delete(key)
 
         num_below_500 = 0
-        for i in xrange(NUM_ELEMENTS):
+        for i in range(NUM_ELEMENTS):
             value = {'a': 1483184218151+random.randint(0, 1000)}
             key = 'i%d' % i
             table.put(key, value)
@@ -298,7 +298,7 @@ class MineMeldFTTableTests(unittest.TestCase):
         d = {}
 
         t1 = time.time()
-        for i in xrange(100000):
+        for i in range(100000):
             value = {'a': random.randint(0, 500)}
             key = 'i%d' % i
             d[key] = value
