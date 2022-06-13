@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # Add later: pypy3
-        python-version: [3.10]
+        # Add later: pypy3. use strings so yaml doesn't get smart
+        # about floats.
+        python-version: ['3.10']
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
