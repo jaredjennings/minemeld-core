@@ -16,9 +16,9 @@ jobs:
     steps:
     - name: Install devel dependencies
       run: >-
-        sudo apt install -y gcc git python-minimal python2.7-dev
+        sudo apt-get install -y gcc
         libffi-dev libssl-dev make g++ libleveldb-dev librrd-dev
-        libxslt1-dev libc-ares-dev libsnappy-dev python-pip
+        libxslt1-dev libc-ares-dev libsnappy-dev
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
