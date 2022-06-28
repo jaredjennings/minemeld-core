@@ -177,7 +177,8 @@ def plan(config, state_info):
 
     graph = _build_graph(config)
 
-    for subgraph in nx.weakly_connected_component_subgraphs(graph, copy=True):
+    for nodebunch in nx.weakly_connected_components(graph):
+        subgraph = nx.subgraph(graph, nodebunch)
         plan.update(_plan_subgraph(subgraph, config, state_info))
 
     return plan
