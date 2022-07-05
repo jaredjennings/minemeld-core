@@ -97,7 +97,7 @@ def get_mmmaster():
     return r
 
 
-MMMaster = werkzeug.LocalProxy(get_mmmaster)  # pylint:disable=E1101
+MMMaster = werkzeug.local.LocalProxy(get_mmmaster)  # pylint:disable=E1101
 
 
 def get_mmrpcclient():
@@ -108,7 +108,7 @@ def get_mmrpcclient():
     return r
 
 
-MMRpcClient = werkzeug.LocalProxy(get_mmrpcclient)  # pylint:disable=E1101
+MMRpcClient = werkzeug.local.LocalProxy(get_mmrpcclient)  # pylint:disable=E1101
 
 
 def teardown(exception):
