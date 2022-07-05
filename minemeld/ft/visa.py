@@ -16,8 +16,6 @@
 This module implements minemeld.ft.visa.VTI, the Miner node for
 Visa Threat Intelligence API.
 """
-from __future__ import absolute_import
-from __future__ import division
 from past.utils import old_div
 import logging
 import requests

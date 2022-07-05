@@ -31,7 +31,7 @@ from unittest import mock
 import json
 import ujson
 import logging
-import guppy3
+import guppy
 import gc
 
 import minemeld.traced.queryprocessor

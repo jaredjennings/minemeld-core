@@ -15,7 +15,6 @@
 """
 Unit tests for minemeld.traced.storage
 """
-from __future__ import print_function
 
 import unittest
 import tempfile
@@ -25,7 +24,7 @@ import time
 from unittest import mock
 import logging
 
-from nose.plugins.attrib import attr
+import pytest
 
 import minemeld.traced.storage
 
@@ -240,7 +239,7 @@ class MineMeldTracedStorage(unittest.TestCase):
 
         store.stop()
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_stress_1(self):
         num_lines = 200000
         store = minemeld.traced.storage.Store()

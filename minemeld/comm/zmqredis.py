@@ -19,7 +19,6 @@
 This module implements ZMQ and Redis communication class for mgmtbus and fabric.
 """
 
-from __future__ import absolute_import
 
 from builtins import str
 from builtins import range

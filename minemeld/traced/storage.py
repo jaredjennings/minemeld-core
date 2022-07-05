@@ -15,7 +15,6 @@
 """
 This module implements the storage mechansim for the mm-traced daemon
 """
-from __future__ import division
 
 from future import standard_library
 standard_library.install_aliases()

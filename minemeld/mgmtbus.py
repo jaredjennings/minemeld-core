@@ -27,7 +27,6 @@ Management bus is used to control the MineMeld engine graph and to
 periodically retrieve metrics from all the nodes.
 """
 
-from __future__ import absolute_import
 
 from builtins import str
 from builtins import object

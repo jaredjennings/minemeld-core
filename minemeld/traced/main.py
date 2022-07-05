@@ -16,7 +16,6 @@
 This module implements the main entry point to the mm-traced daemon
 """
 
-from __future__ import print_function
 
 import gevent
 import gevent.event

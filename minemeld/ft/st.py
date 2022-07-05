@@ -26,7 +26,6 @@ Numbers are 8-bit unsigned.
 
 - Type: 0: START, 1: END
 """
-from __future__ import division
 
 from builtins import object
 from past.utils import old_div

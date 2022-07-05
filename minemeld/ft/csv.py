@@ -17,7 +17,6 @@ This module implements minemeld.ft.csv.CSVFT, the Miner node for csv
 feeds over HTTP/HTTPS.
 """
 
-from __future__ import absolute_import
 
 from builtins import map
 from builtins import str

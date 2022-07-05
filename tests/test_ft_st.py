@@ -16,7 +16,6 @@
 
 Unit tests for minemeld.ft.st
 """
-from __future__ import print_function
 
 import unittest
 import tempfile
@@ -25,7 +24,7 @@ import random
 import uuid
 import time
 
-from nose.plugins.attrib import attr
+import pytest
 
 import minemeld.ft.st
 
@@ -227,7 +226,7 @@ class MineMeldFTSTTests(unittest.TestCase):
     def test_random_map_fast(self):
         self._random_map()
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_random_map_fast2(self):
         self._random_map(nintervals=2000)
 
@@ -239,7 +238,7 @@ class MineMeldFTSTTests(unittest.TestCase):
         self.assertEqual(st.num_endpoints, 2)
         st.close()
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_stress_0(self):
         num_intervals = 100000
         st = minemeld.ft.st.ST(TABLENAME, 32, truncate=True)
@@ -274,7 +273,7 @@ class MineMeldFTSTTests(unittest.TestCase):
 
         st.close()
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_stress_1(self):
         num_intervals = 100000
         st = minemeld.ft.st.ST(TABLENAME, 32, truncate=True)

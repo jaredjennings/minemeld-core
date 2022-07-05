@@ -171,7 +171,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         # __init__ + get chkp + delete chkp
         self.assertEqual(len(SR_mock.mock_calls), 6)
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = 1
+        SR_mock.from_url.return_value.zcard.return_value = 1
 
         # unicast
         b.filtered_update(
@@ -280,7 +280,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         self.assertEqual(cyboxprops['address_value'], '1.1.1.0/27')
         self.assertEqual(cyboxprops['xsi:type'], 'AddressObjectType')
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = 1
+        SR_mock.from_url.return_value.zcard.return_value = 1
 
         # real range
         b.filtered_update(
@@ -340,7 +340,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         # __init__ + get chkp + delete chkp
         self.assertEqual(len(SR_mock.mock_calls), 6)
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = 1
+        SR_mock.from_url.return_value.zcard.return_value = 1
 
         # unicast
         b.filtered_update(
@@ -397,7 +397,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         # __init__ + get chkp + delete chkp
         self.assertEqual(len(SR_mock.mock_calls), 6)
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = 1
+        SR_mock.from_url.return_value.zcard.return_value = 1
 
         # unicast
         b.filtered_update(
@@ -454,8 +454,8 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         # __init__ + get chkp + delete chkp
         self.assertEqual(len(SR_mock.mock_calls), 6)
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = 1
-
+        SR_mock.from_url.return_value.zcard.return_value = 1
+        
         # unicast
         b.filtered_update(
             'a',
@@ -511,7 +511,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         # __init__ + get chkp + delete chkp
         self.assertEqual(len(SR_mock.mock_calls), 6)
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = b.max_entries
+        SR_mock.from_url.return_value.zcard.return_value = b.max_entries
 
         # unicast
         b.filtered_update(
@@ -532,7 +532,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         self.assertEqual(b.statistics['drop.overflow'], 1)
 
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = b.max_entries - 1
+        SR_mock.from_url.return_value.zcard.return_value = b.max_entries - 1
 
         # unicast
         b.filtered_update(
@@ -588,7 +588,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         # __init__ + get chkp + delete chkp
         self.assertEqual(len(SR_mock.mock_calls), 6)
         SR_mock.reset_mock()
-        SR_mock.return_value.zcard.return_value = 1
+        SR_mock.from_url.return_value.zcard.return_value = 1
 
         # sha1
         b.filtered_update(

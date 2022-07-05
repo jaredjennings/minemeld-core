@@ -16,7 +16,6 @@
 
 Unit tests for minemeld.ft.table
 """
-from __future__ import print_function
 
 import unittest
 import tempfile
@@ -26,7 +25,7 @@ import time
 
 import minemeld.ft.table
 
-from nose.plugins.attrib import attr
+import pytest
 
 TABLENAME = tempfile.mktemp(prefix='minemeld.fttabletest')
 NUM_ELEMENTS = 10000
@@ -211,7 +210,7 @@ class MineMeldFTTableTests(unittest.TestCase):
         self.assertEqual(ok, 1)
         table.close()
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_random(self):
         # create table
         table = minemeld.ft.table.Table(TABLENAME)
@@ -289,7 +288,7 @@ class MineMeldFTTableTests(unittest.TestCase):
 
         table.close()
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_write(self):
         # create table
         table = minemeld.ft.table.Table(TABLENAME)

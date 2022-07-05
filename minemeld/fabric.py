@@ -20,7 +20,6 @@ Each chassis has an instance of Fabric and nodes request connections to the
 fabric using this instance.
 """
 
-from __future__ import absolute_import
 
 from builtins import object
 import logging

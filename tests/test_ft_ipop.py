@@ -16,7 +16,6 @@
 
 Unit tests for minemeld.ft.ipop
 """
-from __future__ import print_function
 
 import gevent.monkey
 gevent.monkey.patch_all(thread=False, select=False)
@@ -29,11 +28,11 @@ import logging
 import netaddr
 import random
 
-import guppy3  # noqa
+import guppy  # noqa
 import pdb  # noqa
 import gc  # noqa
 
-from nose.plugins.attrib import attr
+import pytest
 
 import minemeld.ft.ipop
 
@@ -1220,7 +1219,7 @@ class MineMeldFTIPOpTests(unittest.TestCase):
         a.st.db.close()
         a = None
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_stress_1(self):
         num_intervals = 100000
 
@@ -1291,7 +1290,7 @@ class MineMeldFTIPOpTests(unittest.TestCase):
         a.st.db.close()
         a = None
 
-    @attr('slow')
+    @pytest.mark.slow
     def test_stress_2(self):
         num_intervals = 200
 
