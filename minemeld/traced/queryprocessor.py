@@ -65,7 +65,7 @@ class Query(gevent.Greenlet):
         query = query.strip()
         components = query.lower().split()
 
-        field_specific = re.compile('^[\w$]+:.*$')
+        field_specific = re.compile(r'^[\w$]+:.*$')
 
         self.parsed_query = []
         for c in components:
@@ -93,7 +93,7 @@ class Query(gevent.Greenlet):
                 evalue = ''.join(evalue)
 
                 matching_re = (
-                    '"%(field)s":(?:\[(?:".*",)*)?"*[^"]*%(value)s' %
+                    r'"%(field)s":(?:\[(?:".*",)*)?"*[^"]*%(value)s' %
                     {
                         'field': efield,
                         'value': evalue

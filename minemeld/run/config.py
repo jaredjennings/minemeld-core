@@ -524,7 +524,7 @@ def validate_config(config):
     nodes = config.nodes
 
     for n in list(nodes.keys()):
-        if re.match('^[a-zA-Z0-9_\-]+$', n) is None:  # pylint:disable=W1401
+        if re.match(r'^[a-zA-Z0-9_\-]+$', n) is None:  # pylint:disable=W1401
             result.append('%s node name is invalid' % n)
 
     for n, v in list(nodes.items()):

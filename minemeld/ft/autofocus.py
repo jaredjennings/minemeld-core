@@ -27,7 +27,7 @@ from . import basepoller
 
 LOG = logging.getLogger(__name__)
 
-DOMAIN_RE = re.compile('^[a-zA-Z\d-]{,63}(\.[a-zA-Z\d-]{,63})*$')
+DOMAIN_RE = re.compile(r'^[a-zA-Z\d-]{,63}(\.[a-zA-Z\d-]{,63})*$')
 
 
 class ExportList(basepoller.BasePollerFT):

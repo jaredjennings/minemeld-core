@@ -29,7 +29,7 @@ CONFIG = {}
 API_CONFIG_PATH = None
 API_CONFIG_LOCK = None
 
-CONFIG_FILES_RE = '^(?:(?:[0-9]+.*\.yml)|(?:.*\.htpasswd))$'
+CONFIG_FILES_RE = r'^(?:(?:[0-9]+.*\.yml)|(?:.*\.htpasswd))$'
 
 # if you change things here change also backup/import API
 _AUTH_DBS = {

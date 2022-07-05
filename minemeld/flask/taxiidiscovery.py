@@ -20,7 +20,7 @@ import libtaxii.messages_11
 import libtaxii.constants
 
 from flask import request
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from . import config
 from .taxiiutils import get_taxii_feeds, taxii_check, taxii_make_response
@@ -33,7 +33,7 @@ __all__ = ['BLUEPRINT']
 
 BLUEPRINT = MMBlueprint('taxiidiscovery', __name__, url_prefix='')
 
-HOST_RE = re.compile('^[a-zA-Z\d-]{1,63}(?:\.[a-zA-Z\d-]{1,63})*(?::[0-9]{1,5})*$')
+HOST_RE = re.compile(r'^[a-zA-Z\d-]{1,63}(?:\.[a-zA-Z\d-]{1,63})*(?::[0-9]{1,5})*$')
 
 _SERVICE_INSTANCES = [
     {

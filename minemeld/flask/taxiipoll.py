@@ -23,7 +23,7 @@ import libtaxii.constants
 import stix.core
 
 from flask import request, Response, stream_with_context
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from .redisclient import SR
 from .taxiiutils import taxii_check, get_taxii_feeds

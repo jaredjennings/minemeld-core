@@ -25,7 +25,7 @@ from contextlib import contextmanager
 
 import unicodecsv
 from flask import request, jsonify, Response, stream_with_context
-from flask.ext.login import current_user
+from flask_login import current_user
 from gevent import sleep
 from netaddr import IPRange, IPNetwork, IPSet, iprange_to_cidrs
 from netaddr import AddrFormatError
@@ -39,13 +39,13 @@ from .redisclient import SR
 __all__ = ['BLUEPRINT']
 
 FEED_INTERVAL = 100
-_PROTOCOL_RE = re.compile('^(?:[a-z]+:)*//')
-_PORT_RE = re.compile('^([a-z0-9\-\.]+)(?:\:[0-9]+)*')
-_INVALID_TOKEN_RE = re.compile('(?:[^\./+=\?&]+\*[^\./+=\?&]*)|(?:[^\./+=\?&]*\*[^\./+=\?&]+)')
-_BROAD_PATTERN = re.compile('^(?:\*\.)+[a-zA-Z]+(?::[0-9]+)?$')
-_IPV4_MASK_RE = re.compile('^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(\\/[0-9]+)?$')
+_PROTOCOL_RE = re.compile(r'^(?:[a-z]+:)*//')
+_PORT_RE = re.compile(r'^([a-z0-9\-\.]+)(?:\:[0-9]+)*')
+_INVALID_TOKEN_RE = re.compile(r'(?:[^\./+=\?&]+\*[^\./+=\?&]*)|(?:[^\./+=\?&]*\*[^\./+=\?&]+)')
+_BROAD_PATTERN = re.compile(r'^(?:\*\.)+[a-zA-Z]+(?::[0-9]+)?$')
+_IPV4_MASK_RE = re.compile(r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}(\\/[0-9]+)?$')
 _IPV4_RANGE_RE = re.compile(
-    '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}-[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$')
+    r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}-[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$')
 
 BLUEPRINT = MMBlueprint('feeds', __name__, url_prefix='/feeds')
 
@@ -103,7 +103,7 @@ def generate_panosurl_feed(feed, start, num, desc, value, **kwargs):
             i = _PROTOCOL_RE.sub('', i)
 
             withport = i
-            i = _PORT_RE.sub('\g<1>', i)
+            i = _PORT_RE.sub(r'\g<1>', i)
             LOG.debug('{} => {}'.format(withport, i))
             if withport != i and 'sp' not in kwargs:
                 # port removed, but strip port not enabled

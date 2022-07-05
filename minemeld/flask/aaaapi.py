@@ -15,7 +15,7 @@
 import collections
 
 from flask import request, jsonify
-from flask.ext.login import current_user
+from flask_login import current_user
 
 from . import config
 from .aaa import MMBlueprint
