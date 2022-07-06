@@ -1,3 +1,45 @@
+[project]
+name = "minemeld-core"
+# FIXME: it appears there was some effort taken to write the version
+# in only one place; this makes it two places and we should get it back down
+# to one.
+version = "0.9.70.post5"
+requires-python = "~=3.6"
+description = "Extensible threat intelligence processing framework"
+readme = "README.md"
+license.file = "LICENSE"
+authors = [
+    { name = 'Palo Alto Networks', email = 'techbizdev@paloaltonetworks.com'},
+    ]
+maintainers = [
+    { name = 'Jordan Reedy' },
+    { name = 'Jared Jennings', email = 'jjennings@fastmail.fm' },
+    ]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'License :: OSI Approved :: Apache Software License',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Cython',
+    'Topic :: Security',
+    'Topic :: Internet',
+    ]
+urls = [
+    'https://github.com/jaredjennings/minemeld-core',
+]
+
+
+[project.scripts]
+mm-run = minemeld.run.launcher:main
+mm-console = minemeld.run.console:main
+mm-traced = minemeld.traced.main:main
+mm-traced-purge = minemeld.traced.purge:main
+mm-supervisord-listener = minemeld.supervisord.listener:main
+mm-extensions-freeze = minemeld.run.freeze:main
+mm-cacert-merge = minemeld.run.cacert_merge:main
+mm-restore = minemeld.run.restore:main
+mm-extension-from-git = minemeld.run.extgit:main
+
+
 [tool.pytest.ini_options]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
