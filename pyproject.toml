@@ -27,7 +27,6 @@ urls = [
     'https://github.com/jaredjennings/minemeld-core',
 ]
 
-
 [project.scripts]
 mm-run = minemeld.run.launcher:main
 mm-console = minemeld.run.console:main
@@ -39,6 +38,64 @@ mm-cacert-merge = minemeld.run.cacert_merge:main
 mm-restore = minemeld.run.restore:main
 mm-extension-from-git = minemeld.run.extgit:main
 
+[project.entry-points.minemeld_nodes]
+# this is the output of::
+#     jq -r 'to_entries[] | .key + " = " + .value.class ' nodes.json
+# at a point in time.
+minemeld.ft.anomali.Intelligence = minemeld.ft.anomali:Intelligence
+minemeld.ft.auscert.MaliciousURLFeed = minemeld.ft.auscert:MaliciousURLFeed
+minemeld.ft.autofocus.ExportList = minemeld.ft.autofocus:ExportList
+minemeld.ft.azure.AzureXML = minemeld.ft.azure:AzureXML
+minemeld.ft.azure.AzureJSON = minemeld.ft.azure:AzureJSON
+minemeld.ft.cif.Feed = minemeld.ft.cif:Feed
+minemeld.ft.ciscoise.ErsSgt = minemeld.ft.ciscoise:ErsSgt
+minemeld.ft.csv.CSVFT = minemeld.ft.csv:CSVFT
+minemeld.ft.dag.DagPusher = minemeld.ft.dag:DagPusher
+minemeld.ft.dag_ng.DagPusher = minemeld.ft.dag_ng:DagPusher
+minemeld.ft.google.GoogleNetBlocks = minemeld.ft.google:GoogleNetBlocks
+minemeld.ft.google.GoogleCloudNetBlocks = minemeld.ft.google:GoogleCloudNetBlocks
+minemeld.ft.google.GoogleSPF = minemeld.ft.google:GoogleSPF
+minemeld.ft.http.HttpFT = minemeld.ft.http:HttpFT
+minemeld.ft.ipop.AggregateIPv4FT = minemeld.ft.ipop:AggregateIPv4FT
+minemeld.ft.json.SimpleJSON = minemeld.ft.json:SimpleJSON
+minemeld.ft.local.YamlFT = minemeld.ft.local:YamlFT
+minemeld.ft.local.YamlIPv4FT = minemeld.ft.local:YamlIPv4FT
+minemeld.ft.local.YamlURLFT = minemeld.ft.local:YamlURLFT
+minemeld.ft.local.YamlDomainFT = minemeld.ft.local:YamlDomainFT
+minemeld.ft.local.YamlIPv6FT = minemeld.ft.local:YamlIPv6FT
+minemeld.ft.logstash.LogstashOutput = minemeld.ft.logstash:LogstashOutput
+minemeld.ft.o365.O365XML = minemeld.ft.o365:O365XML
+minemeld.ft.o365.O365API = minemeld.ft.o365:O365API
+minemeld.ft.op.AggregateFT = minemeld.ft.op:AggregateFT
+minemeld.ft.phishme.Intelligence = minemeld.ft.phishme:Intelligence
+minemeld.ft.proofpoint.ETIntelligence = minemeld.ft.proofpoint:ETIntelligence
+minemeld.ft.proofpoint.EmergingThreatsIP = minemeld.ft.proofpoint:EmergingThreatsIP
+minemeld.ft.proofpoint.EmergingThreatsDomain = minemeld.ft.proofpoint:EmergingThreatsDomain
+minemeld.ft.recordedfuture.IPRiskList = minemeld.ft.recordedfuture:IPRiskList
+minemeld.ft.recordedfuture.DomainRiskList = minemeld.ft.recordedfuture:DomainRiskList
+minemeld.ft.recordedfuture.MasterRiskList = minemeld.ft.recordedfuture:MasterRiskList
+minemeld.ft.redis.RedisSet = minemeld.ft.redis:RedisSet
+minemeld.ft.syslog.SyslogMatcher = minemeld.ft.syslog:SyslogMatcher
+minemeld.ft.syslog.SyslogMiner = minemeld.ft.syslog:SyslogMiner
+minemeld.ft.taxii.TaxiiClient = minemeld.ft.taxii:TaxiiClient
+minemeld.ft.taxii.DataFeed = minemeld.ft.taxii:DataFeed
+minemeld.ft.threatq.Export = minemeld.ft.threatq:Export
+minemeld.ft.tmt.DTIAPI = minemeld.ft.tmt:DTIAPI
+minemeld.ft.vt.Notifications = minemeld.ft.vt:Notifications
+minemeld.ft.mm.JSONSEQMiner = minemeld.ft.mm:JSONSEQMiner
+minemeld.ft.localdb.Miner = minemeld.ft.localdb:Miner
+minemeld.ft.threatconnect.IndicatorsMiner = minemeld.ft.threatconnect:IndicatorsMiner
+minemeld.ft.threatconnect.GroupsMiner = minemeld.ft.threatconnect:GroupsMiner
+minemeld.ft.visa.VTI = minemeld.ft.visa:VTI
+minemeld.ft.taxii2.Taxii2Client = minemeld.ft.taxii2:Taxii2Client
+minemeld.ft.cofense.Triage = minemeld.ft.cofense:Triage
+minemeld.ft.bambenek.Miner = minemeld.ft.bambenek:Miner
+
+[project.entry-points.minemeld_nodes_gcs]
+# setup.py adds to this any nodes in nodes.json having a 'gc' key
+
+[project.entry-points.minemeld_nodes_validators]
+# setup.py adds to this any nodes in nodes.json having a 'validator' key
 
 [tool.pytest.ini_options]
 markers = [
