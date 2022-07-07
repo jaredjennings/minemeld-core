@@ -9,7 +9,7 @@ description = "Extensible threat intelligence processing framework"
 readme = "README.md"
 license.file = "LICENSE"
 authors = [
-    { name = 'Palo Alto Networks', email = 'techbizdev@paloaltonetworks.com'},
+    { name = 'Palo Alto Networks', email = 'techbizdev@paloaltonetworks.com' },
     ]
 maintainers = [
     { name = 'Jordan Reedy' },
@@ -23,9 +23,7 @@ classifiers = [
     'Topic :: Security',
     'Topic :: Internet',
     ]
-urls = [
-    'https://github.com/jaredjennings/minemeld-core',
-]
+urls.repository = 'https://github.com/jaredjennings/minemeld-core'
 
 [project.scripts]
 mm-run = "minemeld.run.launcher:main"
