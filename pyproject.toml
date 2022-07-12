@@ -25,6 +25,23 @@ classifiers = [
     ]
 urls.repository = 'https://github.com/jaredjennings/minemeld-core'
 
+[project.optional-dependencies]
+test = [
+    'pytest',
+    'mypy',
+    'typed-ast',
+    'types-cryptography',
+    'types-pkg-resources',
+    'types-pyOpenSSL',
+    'types-pytz',
+    'types-PyYAML',
+    'types-redis',
+    'types-requests',
+    'types-six',
+    'types-ujson',
+    'types-urllib3',
+]
+
 [project.scripts]
 mm-run = "minemeld.run.launcher:main"
 mm-console = "minemeld.run.console:main"
