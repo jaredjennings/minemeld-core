@@ -48,7 +48,8 @@ class MineMeldFTRedisTests(unittest.TestCase):
         self.assertEqual(b.name, FTNAME)
         self.assertEqual(b.chassis, chassis)
         self.assertEqual(b.config, config)
-        self.assertItemsEqual(b.inputs, [])
+        # https://github.com/python/cpython/issues/62066
+        self.assertCountEqual(b.inputs, [])
         self.assertEqual(b.output, None)
         self.assertEqual(b.redis_skey, FTNAME)
         self.assertNotEqual(b.SR, None)
@@ -71,7 +72,8 @@ class MineMeldFTRedisTests(unittest.TestCase):
         b.connect(inputs, output)
         b.mgmtbus_initialize()
 
-        self.assertItemsEqual(b.inputs, inputs)
+        # https://github.com/python/cpython/issues/62066
+        self.assertCountEqual(b.inputs, inputs)
         self.assertEqual(b.output, None)
 
         icalls = []
