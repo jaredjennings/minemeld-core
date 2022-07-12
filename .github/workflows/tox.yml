@@ -33,3 +33,15 @@ jobs:
       uses: ymyzk/run-tox-gh-actions@main
       env:
         REDIS_URL: 'redis://localhost:6379/0'
+    - name: Install mypy and its deps
+      run: pip install mypy
+    - name: Run a little mypy
+      run: mypy minemeld/flask/aaa.py
+      env:
+          MYPYPATH: 'type-stubs'
+    - name: Run mypy on everything
+      uses: sasanquaneuf/mypy-github-action@releases/v1
+      with:
+          checkname: 'build' # same as job name
+      env:
+          MYPYPATH: 'type-stubs'

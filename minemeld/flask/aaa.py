@@ -18,8 +18,8 @@ import json
 import base64
 from functools import wraps
 
-import gevent
-import gevent.lock
+import gevent # type: ignore
+import gevent.lock # type: ignore
 # import flask.ext.login
 from flask_login import LoginManager, current_user
 from flask import current_app, Blueprint, request
