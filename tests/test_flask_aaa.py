@@ -17,7 +17,7 @@
 Unit tests for minemeld.ft.autofocus
 """
 
-import gevent.monkey
+import gevent.monkey # type: ignore
 gevent.monkey.patch_all(thread=False, select=False)
 
 import unittest
@@ -27,8 +27,8 @@ import logging
 import os
 import os.path
 import base64
-import passlib.apache
-import xmltodict
+import passlib.apache # type: ignore
+import xmltodict # type: ignore
 
 os.environ['MM_CONFIG'] = '.'
 os.environ['API_CONFIG_LOCK'] = os.path.join('.', 'api-config.lock')
@@ -50,8 +50,8 @@ TAXII_POLL_REQUEST = """<taxii_11:Poll_Request
 </taxii_11:Poll_Request>"""
 
 
-def _authorization_header(username, password):
-    return 'Basic '+base64.b64encode(username+':'+password)
+def _authorization_header(username: str, password: str) -> bytes:
+    return b'Basic '+base64.b64encode((username + ':' + password).encode('UTF-8'))
 
 
 class MineMeldFlaskAAATests(unittest.TestCase):

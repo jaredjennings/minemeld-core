@@ -12,6 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from typing import Optional
 from builtins import str
 from builtins import object
 import json
@@ -287,12 +288,12 @@ def request_loader(request):
     api_key = api_key.replace('Basic', '', 1)
 
     try:
-        api_key = base64.b64decode(api_key)
+        api_key = base64.b64decode(api_key.encode('ascii'))
     except TypeError:
         return None
 
     try:
-        user, password = api_key.split(':', 1)
+        user, password = api_key.split(b':', 1)
     except ValueError:
         return None
 
