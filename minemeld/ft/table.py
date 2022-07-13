@@ -74,13 +74,13 @@ over the keys (2,<index id>,0xF0,<encoded value>) and
 
 from builtins import object
 import os
-import plyvel
+import plyvel # type: ignore
 import struct
 import ujson
 import time
 import logging
 import shutil
-import gevent
+import gevent # type: ignore
 
 
 SCHEMAVERSION_KEY = struct.pack("B", 0)
@@ -197,7 +197,7 @@ class Table(object):
         cmetadata = self._get(CUSTOM_METADATA)
         if cmetadata is None:
             return None
-        return ujson.loads(cmetadata)
+        return ujson.loads(cmetadata.decode('UTF-8'))
 
     def set_custom_metadata(self, metadata=None):
         if metadata is None:
@@ -205,7 +205,7 @@ class Table(object):
             return
 
         cmetadata = ujson.dumps(metadata)
-        self.db.put(CUSTOM_METADATA, cmetadata)
+        self.db.put(CUSTOM_METADATA, cmetadata.encode('UTF-8'))
 
     def close(self):
         if self.db is not None:
@@ -295,7 +295,7 @@ class Table(object):
         }
 
         batch = self.db.write_batch()
-        batch.put(struct.pack("BBB", 0, 1, idxid), attribute)
+        batch.put(struct.pack(b"BBB", 0, 1, idxid), attribute.encode('UTF-8'))
         batch.write()
 
     def put(self, key, value):

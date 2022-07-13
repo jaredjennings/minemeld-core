@@ -1605,8 +1605,8 @@ class DataFeed(actorbase.ActorBaseFT):
 
             sp.add_indicator(sindicator)
 
-        spackage = 'lz4'+lz4.frame.compress(
-            sp.to_json(),
+        spackage = b'lz4'+lz4.frame.compress(
+            sp.to_json().encode('UTF-8'),
             compression_level=lz4.frame.COMPRESSIONLEVEL_MINHC
         )
         with self.SR.pipeline() as p:
