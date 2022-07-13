@@ -316,7 +316,7 @@ class Table(object):
         self.last_update = now
 
         batch = self.db.write_batch()
-        batch.put(ikey, struct.pack(">Q", cversion)+ujson.dumps(value))
+        batch.put(ikey, struct.pack(">Q", cversion)+ujson.dumps(value).encode('UTF-8'))
         batch.put(ikeyv, struct.pack(">Q", cversion))
         batch.put(LAST_UPDATE_KEY, struct.pack(">Q", self.last_update))
         batch.put(TABLE_LAST_GLOBAL_ID, struct.pack(">Q", self.last_global_id))
