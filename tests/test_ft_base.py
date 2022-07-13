@@ -39,7 +39,7 @@ class MineMeldFTBaseTests(unittest.TestCase):
         self.assertEqual(b.name, 'test')
         self.assertEqual(b.chassis, chassis)
         self.assertEqual(b.config, config)
-        self.assertItemsEqual(b.inputs, [])
+        self.assertCountEqual(b.inputs, [])
         self.assertEqual(b.output, None)
         self.assertEqual(b.configure.call_count, 1)
         self.assertEqual(b.state, minemeld.ft.ft_states.READY)
@@ -62,7 +62,7 @@ class MineMeldFTBaseTests(unittest.TestCase):
 
         b.connect(inputs, output)
 
-        self.assertItemsEqual(b.inputs, inputs)
+        self.assertCountEqual(b.inputs, inputs)
         self.assertEqual(b.output, ochannel)
 
         icalls = []

@@ -139,7 +139,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
         self.assertEqual(b.name, FTNAME)
         self.assertEqual(b.chassis, chassis)
         self.assertEqual(b.config, config)
-        self.assertItemsEqual(b.inputs, [])
+        self.assertCountEqual(b.inputs, [])
         self.assertEqual(b.output, None)
         self.assertEqual(b.redis_skey, FTNAME)
         self.assertEqual(b.redis_skey_chkp, FTNAME+'.chkp')
