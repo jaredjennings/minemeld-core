@@ -34,6 +34,7 @@ import os
 import libtaxii.constants
 import re
 import lz4
+import lz4.frame
 import json
 
 import minemeld.ft.taxii
@@ -55,6 +56,28 @@ class MockTaxiiContentBlock(object):
 
 
 class MineMeldFTTaxiiTests(unittest.TestCase):
+    def _find_hset_call(self, SR_mock):
+        for call in SR_mock.mock_calls:
+            name, args, kwargs = call
+            print(name)
+            if name == 'from_url().pipeline().__enter__().hset':
+                return name, args, kwargs
+        else:
+            raise KeyError('hset call')
+
+    def find_hset_call(self, SR_mock):
+        try:
+            return self._find_hset_call(SR_mock)
+        except KeyError:
+            self.fail('could not find hset call')
+
+    def not_find_hset_call(self, SR_mock):
+        try:
+            self._find_hset_call(SR_mock)
+            self.fail('found hset call')
+        except KeyError:
+            pass
+
     @mock.patch.object(gevent, 'Greenlet')
     def test_taxiiclient_parse(self, glet_mock):
         config = {
@@ -184,15 +207,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.uncompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -211,15 +229,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.uncompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -238,15 +251,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.uncompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -265,15 +273,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.uncompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -293,15 +296,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.uncompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators']
         cyboxprops = indicator[0]['observable']['object']['properties']
@@ -353,15 +351,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -410,15 +403,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -467,15 +455,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -524,10 +507,7 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                self.fail(msg='hset found')
+        self.not_find_hset_call(SR_mock)
 
         self.assertEqual(b.statistics['drop.overflow'], 1)
 
@@ -545,15 +525,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -601,15 +576,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -628,15 +598,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
@@ -655,15 +620,10 @@ class MineMeldFTTaxiiTests(unittest.TestCase):
                 'sources': ['test.1']
             }
         )
-        for call in SR_mock.mock_calls:
-            name, args, kwargs = call
-            if name == '().pipeline().__enter__().hset':
-                break
-        else:
-            self.fail(msg='hset not found')
+        name, args, kwargs = self.find_hset_call(SR_mock)
 
-        self.assertEqual(args[2].startswith('lz4'), True)
-        stixdict = json.loads(lz4.decompress(args[2][3:]))
+        self.assertEqual(args[2].startswith(b'lz4'), True)
+        stixdict = json.loads(lz4.frame.decompress(args[2][3:]))
 
         indicator = stixdict['indicators'][0]
         cyboxprops = indicator['observable']['object']['properties']
